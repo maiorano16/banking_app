@@ -1,0 +1,34 @@
+{
+    "transactions": [
+      {
+        "card_id": "12345",
+        "transaction_number": "T001",
+        "transaction_type": "Online Payment",
+        "service_type": "Netflix",
+        "transaction_date": "2024-12-01",
+        "status": "Contabilizzato",
+        "flow": "Uscita",
+        "transaction_cost": 15.99
+      },
+      {
+        "card_id": "12345",
+        "transaction_number": "T002",
+        "transaction_type": "Subscription Renewal",
+        "service_type": "Spotify",
+        "transaction_date": "2024-12-02",
+        "status": "Non contabilizzato",
+        "flow": "Uscita",
+        "transaction_cost": 9.99
+      },
+      {
+        "card_id": "67890",
+        "transaction_number": "T003",
+        "transaction_type": "Bank Transfer",
+        "service_type": "N/A",
+        "transaction_date": "2024-12-03",
+        "status": "Contabilizzato",
+        "flow": "Entrata",
+        "transaction_cost": 100.00
+      }
+    ]
+  }
