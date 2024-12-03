@@ -1,0 +1,22 @@
+{
+    "balances": [
+      {
+        "period": "monthly",
+        "total_money_in_bank": 5000,
+        "total_savings": 15000,
+        "expense_cost": 1200
+      },
+      {
+        "period": "weekly",
+        "total_money_in_bank": 2000,
+        "total_savings": 8000,
+        "expense_cost": 300
+      },
+      {
+        "period": "annual",
+        "total_money_in_bank": 60000,
+        "total_savings": 25000,
+        "expense_cost": 15000
+      }
+    ]
+  }
