@@ -14,7 +14,15 @@ class _CardScreenState extends State<CardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Card Example'),
+        title: const Text('CardScreen'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              print('IconButton cliccato');
+            },
+          ),
+        ],
       ),
       body: FutureBuilder<List<Carta>>(
         future: loadCarteFromJson(),
