@@ -1,5 +1,7 @@
 import 'package:banking_app_1/carousel_cards.dart';
 import 'package:banking_app_1/models/card_model.dart';
+import 'package:banking_app_1/models/transaction_model.dart';
+import 'package:banking_app_1/transaction_list.dart';
 import 'package:flutter/material.dart';
 
 class CardScreen extends StatefulWidget {
@@ -9,9 +11,12 @@ class CardScreen extends StatefulWidget {
 
 class _CardScreenState extends State<CardScreen> {
   List<int> cardOrder = [];
+   List<Transazioni> transactions = [];
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Card Example'),
@@ -30,9 +35,38 @@ class _CardScreenState extends State<CardScreen> {
             if (cardOrder.isEmpty) {
               cardOrder = List.generate(carte.length, (index) => index);
             }
-            return SizedBox(
-              height: 200,
-              child: Carousel(title: 'Carosello', carte: carte),
+            return Column(
+              children: [
+
+                SizedBox(
+                  height: 200,
+                  child: Carousel(title: 'Carosello', carte: carte),
+                ),
+                
+                const SizedBox(
+                  height: 40,
+                ),
+
+                Expanded(
+                  child: FutureBuilder<List<Transazioni>>(
+                    future: loadTransazioniFromJson(),  
+                    builder: (context, transactionSnapshot) {
+                      if (transactionSnapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (transactionSnapshot.hasError) {
+                        return Center(child: Text('Errore: ${transactionSnapshot.error}'));
+                      } else if (!transactionSnapshot.hasData || transactionSnapshot.data!.isEmpty) {
+                        return const Center(child: Text('Nessuna transazione disponibile.'));
+                      } else {
+                        List<Transazioni> transazioni = transactionSnapshot.data!;
+                        return GroupedListViewPage(
+                          loadTransactions: () => Future.value(transazioni), 
+                        );
+                      }
+                    }
+                  )
+                )
+              ]
             );
           }
         },
