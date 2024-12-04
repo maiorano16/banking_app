@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:banking_app_1/models/transaction_model.dart';
 import 'package:flutter/services.dart';
 
 class Carta {
@@ -6,17 +7,18 @@ class Carta {
   String circuito;
   String scadenzaCarta;
   double saldoCarta;
-  String idUnivoco;
+  String cardId;
   String numeroCarta;
   String tipoAccount;
   String iban;
+  List<Transazioni> transazioni = [];
 
   Carta({
     required this.tipoCarta,
     required this.circuito,
     required this.scadenzaCarta, 
     required this.saldoCarta,
-    required this.idUnivoco,
+    required this.cardId,
     required this.numeroCarta,
     required this.tipoAccount,
     required this.iban,
@@ -28,7 +30,7 @@ class Carta {
       circuito: json['circuito'],
       scadenzaCarta: json['scadenza_carta'],
       saldoCarta: json['saldo_carta'],
-      idUnivoco: json['id_univoca'],
+      cardId: json['cardId'],
       numeroCarta: json['numero_carta'],
       tipoAccount: json['type_of_account'],
       iban: json['iban'],
