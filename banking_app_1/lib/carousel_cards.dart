@@ -57,7 +57,7 @@ class _CarouselState extends State<Carousel> {
                   ),
                   Positioned(
                     top: 150,
-                    left: 280,
+                    right: 16,
                     child: Text(
                       carta.scadenzaCarta,
                       style: const TextStyle(
