@@ -1,7 +1,7 @@
 {
     "transactions": [
       {
-        "card_id": "12345",
+        "card_id": "C001",
         "transaction_number": "T001",
         "transaction_type": "Online Payment",
         "service_type": "Netflix",
@@ -11,7 +11,7 @@
         "transaction_cost": 15.99
       },
       {
-        "card_id": "12345",
+        "card_id": "C002",
         "transaction_number": "T002",
         "transaction_type": "Subscription Renewal",
         "service_type": "Spotify",
@@ -21,7 +21,7 @@
         "transaction_cost": 9.99
       },
       {
-        "card_id": "67890",
+        "card_id": "C003",
         "transaction_number": "T003",
         "transaction_type": "Bank Transfer",
         "service_type": "N/A",

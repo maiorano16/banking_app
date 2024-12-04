@@ -1,32 +1,32 @@
 {
     "cards": [
       {
+        "cardId": "C001",
         "tipo_carta": "Debit Card",
         "circuito": "Visa",
         "scadenza_carta": "12/2025",
         "saldo_carta": 1500.50,
-        "id_univoca": "123456789",
         "numero_carta": "411 *****",
         "type_of_account": "Main account",
         "iban": "IT60X0542811101000000123456"
       },
       {
+        "cardId": "C002",
         "tipo_carta": "Credit Card",
         "circuito": "Mastercard",
         "scadenza_carta": "06/2024",
         "saldo_carta": 750.25,
-        "id_univoca": "987654321",
         "numero_carta": "555 *****",
         "type_of_account": "Normal account",
         "iban": "DE89370400440532013000"
   
       },
       {
+        "cardId": "C003",
         "tipo_carta": "Credit Card",
         "circuito": "Hype",
         "scadenza_carta": "09/2024",
         "saldo_carta": 7900.25,
-        "id_univoca": "987654321",
         "numero_carta": "535 *****",
         "type_of_account": "Normal account",
         "iban": "GB29NWBK60161331926819"
