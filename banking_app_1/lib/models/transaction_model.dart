@@ -43,3 +43,15 @@ Future<List<Transazioni>> loadTransazioniFromJson() async{
   return transazioniList.map((json) => Transazioni.fromJson(json)).toList();
 
 }
+
+Map<String, List<Transazioni>> groupTransactionsByCardId(List<Transazioni> transactions) {
+  Map<String, List<Transazioni>> grouped = {};
+  for (var transaction in transactions) {
+    if (grouped.containsKey(transaction.cardId)) {
+      grouped[transaction.cardId]!.add(transaction);
+    } else {
+      grouped[transaction.cardId] = [transaction];
+    }
+  }
+  return grouped;
+}
