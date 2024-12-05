@@ -36,22 +36,9 @@ class Transaction {
   }
 
 }
-Future<List<Transaction>> loadTransactionFromJson() async{
+Future<List<Transaction>> loadTransactionFromJson() async {
   final String response = await rootBundle.loadString('assets/transaction.json');
   final Map<String, dynamic> data = json.decode(response);
-   final List<dynamic> transactionsList = data['transactions'];
+  final List<dynamic> transactionsList = data['transactions'];
   return transactionsList.map((json) => Transaction.fromJson(json)).toList();
-
-}
-
-Map<String, List<Transaction>> groupTransactionsByCardId(List<Transaction> transactions) {
-  Map<String, List<Transaction>> grouped = {};
-  for (var transaction in transactions) {
-    if (grouped.containsKey(transaction.cardId)) {
-      grouped[transaction.cardId]!.add(transaction);
-    } else {
-      grouped[transaction.cardId] = [transaction];
-    }
-  }
-  return grouped;
 }
