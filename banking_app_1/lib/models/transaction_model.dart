@@ -1,51 +1,51 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 
-class Transazioni {
+class Transaction {
   String cardId;
-  String numeroTransazione;
-  String tipoTransazione;
-  String servizio;
-  String dataTransazione;
-  String statoTransazione;
-  String direzioneTransazione;
-  double costoTransazione;
+  String transactionNumber;
+  String typeOfTransaction;
+  String service;
+  String dateOfTransaction;
+  String status;
+  String flow;
+  double costOfTransaction;
 
-  Transazioni({
+  Transaction({
     required this.cardId,
-    required this.numeroTransazione,
-    required this.tipoTransazione,
-    required this.servizio,
-    required this.dataTransazione,
-    required this.statoTransazione,
-    required this.direzioneTransazione,
-    required this.costoTransazione,
+    required this.transactionNumber,
+    required this.typeOfTransaction,
+    required this.service,
+    required this.dateOfTransaction,
+    required this.status,
+    required this.flow,
+    required this.costOfTransaction,
   });
 
-  factory Transazioni.fromJson(Map<String, dynamic> json){
-    return Transazioni(
+  factory Transaction.fromJson(Map<String, dynamic> json){
+    return Transaction(
       cardId: json['card_id'],
-      numeroTransazione: json['transaction_number'],
-      tipoTransazione: json['transaction_type'],
-      servizio: json['service_type'],
-      dataTransazione: json['transaction_date'],
-      statoTransazione: json['status'],
-      direzioneTransazione: json['flow'],
-      costoTransazione: json['transaction_cost'],
+      transactionNumber: json['transaction_number'],
+      typeOfTransaction: json['transaction_type'],
+      service: json['service_type'],
+      dateOfTransaction: json['transaction_date'],
+      status: json['status'],
+      flow: json['flow'],
+      costOfTransaction: json['transaction_cost'],
     );
   }
 
 }
-Future<List<Transazioni>> loadTransazioniFromJson() async{
+Future<List<Transaction>> loadTransactionFromJson() async{
   final String response = await rootBundle.loadString('assets/transaction.json');
   final Map<String, dynamic> data = json.decode(response);
-   final List<dynamic> transazioniList = data['transactions'];
-  return transazioniList.map((json) => Transazioni.fromJson(json)).toList();
+   final List<dynamic> transactionsList = data['transactions'];
+  return transactionsList.map((json) => Transaction.fromJson(json)).toList();
 
 }
 
-Map<String, List<Transazioni>> groupTransactionsByCardId(List<Transazioni> transactions) {
-  Map<String, List<Transazioni>> grouped = {};
+Map<String, List<Transaction>> groupTransactionsByCardId(List<Transaction> transactions) {
+  Map<String, List<Transaction>> grouped = {};
   for (var transaction in transactions) {
     if (grouped.containsKey(transaction.cardId)) {
       grouped[transaction.cardId]!.add(transaction);
