@@ -2,26 +2,25 @@ import 'package:banking_app_1/models/card_model.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
-class Carousel extends StatefulWidget {
+class Carousel extends StatelessWidget {
   final String title;
   final List<Carta> carte;
+  final Function(String) onCardSelected;
+  final String selectedCardId;
 
-  const Carousel({Key? key, required this.title, required this.carte}) : super(key: key);
-
-  @override
-  _CarouselState createState() => _CarouselState();
-}
-
-class _CarouselState extends State<Carousel> {
+  const Carousel({Key? key, required this.title, required this.carte, required this.onCardSelected, required this.selectedCardId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Swiper(
-        itemCount: widget.carte.length, 
-        itemBuilder: (context, index) {
-          Carta card = widget.cards[index]; 
-          return Padding(
+    return Swiper(
+      itemCount: carte.length,
+      itemBuilder: (context, index) {
+        Carta card = carte[index];
+        return GestureDetector(
+          onTap: () {
+            onCardSelected(card.cardId);
+          },
+          child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Card(
               elevation: 5,
@@ -46,7 +45,6 @@ class _CarouselState extends State<Carousel> {
                         ),
                         const SizedBox(height: 30),
                         Text(
-                          '${carta.numeroCarta}',
                           '${card.numeroCarta}',
                           style: const TextStyle(
                             fontSize: 14,
@@ -93,12 +91,13 @@ class _CarouselState extends State<Carousel> {
                 ],
               ),
             ),
-          );
-        },
-        itemHeight: 250.0,
-        itemWidth: 300.0,
-        layout: SwiperLayout.STACK,
-      ),
+          ),
+        );
+      },
+      itemHeight: 250.0,
+      itemWidth: 300.0,
+      layout: SwiperLayout.STACK,
+      index: carte.indexWhere((card) => card.cardId == selectedCardId),
     );
   }
 }
