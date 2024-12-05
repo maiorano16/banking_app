@@ -20,7 +20,7 @@ class _CarouselState extends State<Carousel> {
       body: Swiper(
         itemCount: widget.carte.length, 
         itemBuilder: (context, index) {
-          Carta carta = widget.carte[index]; 
+          Carta card = widget.cards[index]; 
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Card(
@@ -37,7 +37,7 @@ class _CarouselState extends State<Carousel> {
                       children: [
                         const SizedBox(height: 32),
                         Text(
-                          '£${carta.saldoCarta}',
+                          '£${card.saldoCarta}',
                           style: const TextStyle(
                             fontSize: 16,
                             color: Colors.green,
@@ -47,6 +47,7 @@ class _CarouselState extends State<Carousel> {
                         const SizedBox(height: 30),
                         Text(
                           '${carta.numeroCarta}',
+                          '${card.numeroCarta}',
                           style: const TextStyle(
                             fontSize: 14,
                             color: Colors.grey,
@@ -59,7 +60,7 @@ class _CarouselState extends State<Carousel> {
                     top: 150,
                     right: 16,
                     child: Text(
-                      carta.scadenzaCarta,
+                      card.scadenzaCarta,
                       style: const TextStyle(
                         fontSize: 12,
                         color: Colors.grey,
@@ -70,7 +71,7 @@ class _CarouselState extends State<Carousel> {
                     top: 8,
                     right: 16,
                     child: Text(
-                      carta.circuito,
+                      card.circuito,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
@@ -82,7 +83,7 @@ class _CarouselState extends State<Carousel> {
                     top: 150,
                     left: 15,
                     child: Text(
-                      carta.tipoCarta,
+                      card.tipoCarta,
                       style: const TextStyle(
                         fontSize: 14,
                         color: Colors.black87,
