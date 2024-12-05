@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:banking_app_1/models/transaction_model.dart';
 import 'package:flutter/services.dart';
 
 class Carta {
@@ -11,7 +10,6 @@ class Carta {
   String numeroCarta;
   String tipoAccount;
   String iban;
-  List<Transazioni> transazioni = [];
 
   Carta({
     required this.tipoCarta,
