@@ -11,12 +11,24 @@ class CardScreen extends StatefulWidget {
 
 class _CardScreenState extends State<CardScreen> {
   List<int> cardOrder = [];
-   List<Transazioni> transactions = [];
+  List<Transaction> transactions = [];
+   String selectedCardId = '';
+
+   @override
+  void initState() {
+    super.initState();
+    loadTransactionFromJson().then((loadedTransactions) {
+      setState(() {
+        transactions = loadedTransactions; 
+      });
+    }).catchError((e) {
+      print("Errore durante il caricamento delle transazioni: $e");
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('CardScreen'),
@@ -45,40 +57,36 @@ class _CardScreenState extends State<CardScreen> {
             }
             return Column(
               children: [
-
                 SizedBox(
                   height: 200,
-                  child: Carousel(title: 'Carosello', carte: carte),
+                  child: Carousel(
+                    title: 'Carosello',
+                    carte: carte,
+                    selectedCardId: selectedCardId,
+                    onCardSelected: (cardId) {
+                      setState(() {
+                        selectedCardId = cardId;
+                      });
+                    },
+                  ),
                 ),
-                
-                const SizedBox(
-                  height: 40,
-                ),
-
-                Expanded(
-                  child: FutureBuilder<List<Transazioni>>(
-                    future: loadTransazioniFromJson(),  
-                    builder: (context, transactionSnapshot) {
-                      if (transactionSnapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (transactionSnapshot.hasError) {
-                        return Center(child: Text('Errore: ${transactionSnapshot.error}'));
-                      } else if (!transactionSnapshot.hasData || transactionSnapshot.data!.isEmpty) {
-                        return const Center(child: Text('Nessuna transazione disponibile.'));
-                      } else {
-                        List<Transazioni> transazioni = transactionSnapshot.data!;
-                        return GroupedListViewPage(
-                          loadTransactions: () => Future.value(transazioni), 
-                        );
-                      }
-                    }
-                  )
-                )
-              ]
+                const SizedBox(height: 40),
+                selectedCardId.isNotEmpty
+                    ? Expanded(
+                        child: TransactionsListPage(
+                          transactions: filterTransactionsByCardId(selectedCardId),
+                        ),
+                      )
+                    : const Center(child: Text('Seleziona una carta per vedere le transazioni.')),
+              ],
             );
           }
         },
       ),
     );
+  }
+
+  List<Transaction> filterTransactionsByCardId(String cardId) {
+    return transactions.where((transaction) => transaction.cardId == cardId).toList();
   }
 }
