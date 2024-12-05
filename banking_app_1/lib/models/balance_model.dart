@@ -1,35 +1,35 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 
-class Bilancio {
-  String periodo;
-  double bilancioVerde;
-  double bilancioRisparmi;
-  double bilancioRosso;
+class Balance {
+  String period;
+  double totalMoneyInBank;
+  double totalSavings;
+  double cost;
 
 
-  Bilancio({
-    required this.periodo,
-    required this.bilancioVerde,
-    required this.bilancioRisparmi,
-    required this.bilancioRosso,
+  Balance({
+    required this.period,
+    required this.totalMoneyInBank,
+    required this.totalSavings,
+    required this.cost,
   });
 
-  factory Bilancio.fromJson(Map<String, dynamic> json){
-    return Bilancio(
-      periodo: json['period'],
-      bilancioVerde: json['total_money_in_bank'],
-      bilancioRisparmi: json['total_savings'],
-      bilancioRosso: json['expense_cost'],
+  factory Balance.fromJson(Map<String, dynamic> json){
+    return Balance(
+      period: json['period'],
+      totalMoneyInBank: json['total_money_in_bank'],
+      totalSavings: json['total_savings'],
+      cost: json['expense_cost'],
     );
   }
 
 }
 
-Future<List<Bilancio>> loadBilancioFromJson() async{
-  final String response = await rootBundle.loadString('assets/bilancio.json');
+Future<List<Balance>> loadBalanceFromJson() async{
+  final String response = await rootBundle.loadString('assets/balance.json');
   final Map<String, dynamic> data = json.decode(response);
-   final List<dynamic> bilancioList = data['bilancio'];
-  return bilancioList.map((json) => Bilancio.fromJson(json)).toList();
+   final List<dynamic> balanceList = data['balances'];
+  return balanceList.map((json) => Balance.fromJson(json)).toList();
 
 }
