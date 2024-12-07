@@ -68,14 +68,12 @@ class Carousel extends StatelessWidget {
                   Positioned(
                     top: 8,
                     right: 16,
-                    child: Text(
-                      card.circuito,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        color: Colors.black87,
-                      ),
-                    ),
+                    child: Image.asset(
+                      getLogoForCardBankingNetwork(card.circuito),
+                      width: 60,
+                      height: 60,
+                      fit: BoxFit.contain,
+                    )
                   ),
                   Positioned(
                     top: 150,
@@ -103,4 +101,17 @@ class Carousel extends StatelessWidget {
       },
     );
   }
+}
+
+String getLogoForCardBankingNetwork(String circuit) {
+    switch (circuit){
+      case 'Visa':
+        return 'assets/cardLogos/visa.png';
+      case 'Mastercard':
+        return 'assets/cardLogos/mastercard.png'; 
+      case 'Hype':
+        return 'assets/cardLogos/hype.png';
+      default:
+        return 'assets/cardLogos/circuito.png';  
+    }
 }
