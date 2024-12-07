@@ -53,7 +53,8 @@ class _CardScreenState extends State<CardScreen> {
           } else {
             List<Carta> carte = snapshot.data!;
             if (cardOrder.isEmpty) {
-              cardOrder = List.generate(carte.length, (index) => index);
+               cardOrder = List.generate(carte.length, (index) => index);
+               selectedCardId = carte[0].cardId;
             }
             return Column(
               children: [
