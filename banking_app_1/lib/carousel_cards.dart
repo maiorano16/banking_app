@@ -98,6 +98,9 @@ class Carousel extends StatelessWidget {
       itemWidth: 300.0,
       layout: SwiperLayout.STACK,
       index: carte.indexWhere((card) => card.cardId == selectedCardId),
+       onIndexChanged: (index) {
+        onCardSelected(carte[index].cardId);
+      },
     );
   }
 }
