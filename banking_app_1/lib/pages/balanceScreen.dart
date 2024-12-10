@@ -1,19 +1,58 @@
+import 'package:flutter/material.dart';
 import 'package:banking_app_1/models/balance_model.dart';
 import 'package:banking_app_1/widgets/circular_progres_bar_balance.dart';
-import 'package:flutter/material.dart';
 
-class BalancePage extends StatelessWidget {
-  final List<Balance> balances;
+class BalancePage extends StatefulWidget {
+  @override
+  _BalancePageState createState() => _BalancePageState();
+}
 
-  BalancePage({required this.balances});
+class _BalancePageState extends State<BalancePage> {
+
+  String selectedPeriod = 'weekly';
+
+  Future<List<Balance>> loadBalanceData() async {
+    return await loadBalanceFromJson();
+  }
 
   List<double> _calculatePercentages(Balance balance) {
     double total = balance.totalMoneyInBank + balance.totalSavings + balance.cost;
     double moneyInBankPercentage = balance.totalMoneyInBank / total;
+    double costPercentage = balance.cost / total;
     double savingsPercentage = balance.totalSavings / total;
-    double expensePercentage = balance.cost / total;
 
-    return [moneyInBankPercentage, savingsPercentage, expensePercentage];
+    return [moneyInBankPercentage, costPercentage, savingsPercentage];
+  }
+
+  void _showBottomSheet(BuildContext context, String period) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.all(16),
+          height: 250,
+          width: 400,
+          color: Colors.white,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Selezionato: $period', style: TextStyle(fontSize: 18)),
+              SizedBox(height: 10),
+              Text('Periodo: $period', style: TextStyle(fontSize: 16)),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    selectedPeriod = period;
+                  });
+                  Navigator.pop(context);
+                },
+                child: Text('Conferma'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -21,77 +60,67 @@ class BalancePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Balance'),
-        backgroundColor: Colors.blue,
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Bilancio Attuale',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 16),
-            Expanded(
-              child: ListView.builder(
-                itemCount: balances.length,
-                itemBuilder: (context, index) {
-                  final balance = balances[index];
-                  List<double> percentages = _calculatePercentages(balance);
+            SizedBox(height: 40),
+            FutureBuilder<List<Balance>>(
+              future: loadBalanceData(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Errore nel caricamento dei dati'));
+                } else if (snapshot.hasData) {
+                  final balances = snapshot.data!;
+                  final selectedBalance = balances.firstWhere((balance) => balance.period == selectedPeriod);
 
-                  return Card(
-                    margin: EdgeInsets.symmetric(vertical: 8),
-                    elevation: 4,
-                    child: ListTile(
-                      contentPadding: EdgeInsets.all(16),
-                      title: Text(
-                        '${balance.period.capitalize()} Period',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 16.0),
-                            child: CircularBar(
-                              values: percentages,
-                              colors: [
-                                Color(0xFF29D3E8), 
-                                Color(0xFF18C737), 
-                                Color(0xFFFFCC05), 
-                              ],
-                              label: 'Bilancio per ${balance.period.capitalize()}',
-                              innerText: '${(percentages[0] * 100).toStringAsFixed(1)}%',
-                            ),
-                          ),
-                          Text('Totale denaro in banca: €${balance.totalMoneyInBank.toStringAsFixed(2)}'),
-                          Text('Risparmi totali: €${balance.totalSavings.toStringAsFixed(2)}'),
-                          Text('Spese: €${balance.cost.toStringAsFixed(2)}'),
-                          SizedBox(height: 8),
-                          Text(
-                            'Saldo: €${balance.balance.toStringAsFixed(2)}',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: balance.balance >= 0 ? Colors.green : Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                  List<double> percentages = _calculatePercentages(selectedBalance);
+
+                  return CircularBar(
+                    values: percentages,
+                    colors: [
+                      Color(0xFF29D3E8),
+                      Color.fromARGB(255, 255, 5, 5),
+                      Color.fromARGB(255, 225, 255, 0),
+                    ],
+                    label: 'Period of balance',
+                    innerText: '                   Period: \n(${selectedBalance.startPeriod}) - (${selectedBalance.finalPeriod})',
                   );
-                },
-              ),
+                } else {
+                  return Center(child: Text('Nessun dato disponibile'));
+                }
+              },
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildPeriodButton('Settimana', 'weekly'),
+                SizedBox(width: 10),
+                _buildPeriodButton('Mese', 'monthly'),
+                SizedBox(width: 10),
+                _buildPeriodButton('Anno', 'annual'),
+
+              ],
             ),
           ],
         ),
       ),
     );
   }
-}
 
-extension StringCapitalization on String {
-  String capitalize() {
-    return this[0].toUpperCase() + this.substring(1).toLowerCase();
+  Widget _buildPeriodButton(String label, String period) {
+    return ElevatedButton(
+      onPressed: () {
+        setState(() {
+          selectedPeriod = period;
+           _showBottomSheet(context, period);
+        });
+      },
+      child: Text(label),
+    );
   }
 }
