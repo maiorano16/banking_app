@@ -1,7 +1,7 @@
-import 'package:banking_app_1/carousel_cards.dart';
+import 'package:banking_app_1/widgets/carousel_cards.dart';
 import 'package:banking_app_1/models/card_model.dart';
 import 'package:banking_app_1/models/transaction_model.dart';
-import 'package:banking_app_1/transaction_list.dart';
+import 'package:banking_app_1/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
 
 class CardScreen extends StatefulWidget {
