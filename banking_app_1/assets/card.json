@@ -1,36 +1,54 @@
 {
-    "cards": [
-      {
-        "cardId": "C001",
-        "tipo_carta": "Debit Card",
-        "circuito": "Visa",
-        "scadenza_carta": "12/2025",
-        "saldo_carta": 1500.50,
-        "numero_carta": "411 *****",
-        "type_of_account": "Main account",
-        "iban": "IT60X0542811101000000123456"
-      },
-      {
-        "cardId": "C002",
-        "tipo_carta": "Credit Card",
-        "circuito": "Mastercard",
-        "scadenza_carta": "06/2024",
-        "saldo_carta": 750.25,
-        "numero_carta": "555 *****",
-        "type_of_account": "Normal account",
-        "iban": "DE89370400440532013000"
-  
-      },
-      {
-        "cardId": "C003",
-        "tipo_carta": "Credit Card",
-        "circuito": "Hype",
-        "scadenza_carta": "09/2024",
-        "saldo_carta": 7900.25,
-        "numero_carta": "535 *****",
-        "type_of_account": "Normal account",
-        "iban": "GB29NWBK60161331926819"
-  
-      }
-    ]
-  }
+  "cards": [
+    {
+      "cardId": "C001",
+      "tipo_carta": "Credit Card",
+      "circuito": "Mastercard",
+      "scadenza_carta": "02/2025",
+      "saldo_carta": 1050.75,
+      "numero_carta": "4001 *****",
+      "type_of_account": "Normal account",
+      "iban": "IT10X1428111010000001"
+    },
+    {
+      "cardId": "C002",
+      "tipo_carta": "Debit Card",
+      "circuito": "Hype",
+      "scadenza_carta": "03/2026",
+      "saldo_carta": 1101.5,
+      "numero_carta": "4002 *****",
+      "type_of_account": "Normal account",
+      "iban": "IT20X2428111010000002"
+    },
+    {
+      "cardId": "C003",
+      "tipo_carta": "Credit Card",
+      "circuito": "Amex",
+      "scadenza_carta": "04/2027",
+      "saldo_carta": 1152.25,
+      "numero_carta": "4003 *****",
+      "type_of_account": "Main account",
+      "iban": "IT30X3428111010000003"
+    },
+    {
+      "cardId": "C004",
+      "tipo_carta": "Debit Card",
+      "circuito": "Discover",
+      "scadenza_carta": "05/2028",
+      "saldo_carta": 1203.0,
+      "numero_carta": "4004 *****",
+      "type_of_account": "Normal account",
+      "iban": "IT40X4428111010000004"
+    },
+    {
+      "cardId": "C005",
+      "tipo_carta": "Credit Card",
+      "circuito": "Visa",
+      "scadenza_carta": "06/2024",
+      "saldo_carta": 1253.75,
+      "numero_carta": "4005 *****",
+      "type_of_account": "Normal account",
+      "iban": "IT50X0428111010000005"
+    }
+  ]
+}
