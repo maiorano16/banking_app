@@ -1,4 +1,3 @@
-
 import 'package:banking_app_1/pages/balanceScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: BalancePage(balances: balances),
+      home: BalancePage(),
       debugShowCheckedModeBanner: false,
     );
   }
