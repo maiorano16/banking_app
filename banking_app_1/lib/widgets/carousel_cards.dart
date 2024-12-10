@@ -111,6 +111,16 @@ String getLogoForCardBankingNetwork(String circuit) {
         return 'assets/cardLogos/mastercard.png'; 
       case 'Hype':
         return 'assets/cardLogos/hype.png';
+      case 'American Express':
+        return 'assets/cardLogos/americanExpress.png';
+      case 'Discover':
+        return 'assets/cardLogos/Discover.png';
+      case 'Maestro':
+        return 'assets/cardLogos/Maestro.png';
+      case 'UnionPay':
+        return 'assets/cardLogos/UnionPay.png';
+      case 'Diners Club':
+        return 'assets/cardLogos/DinersClub.png';
       default:
         return 'assets/cardLogos/circuito.png';  
     }
