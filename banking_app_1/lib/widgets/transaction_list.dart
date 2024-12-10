@@ -68,7 +68,7 @@ class TransactionsListPage extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              color: Colors.green, 
+                              color: transaction.flow == 'Uscita'? Colors.red : Colors.green, 
                             ),
                           ),
                         ),
