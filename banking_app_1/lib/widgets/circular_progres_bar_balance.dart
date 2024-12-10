@@ -27,7 +27,16 @@ class CircularBar extends StatelessWidget {
       animationDuration: const Duration(milliseconds: 500),
       animationCurve: Curves.easeIn,
       innerIcon: Icon(Icons.account_balance_wallet),
-      innerWidget: Text(innerText),
+      innerWidget: Center(  
+        child: Text(
+          innerText,
+          style: TextStyle(
+            fontSize: 16, 
+            fontWeight: FontWeight.bold,
+            color: Colors.black,  
+          ),
+        ),
+      ),
       trackColor: Colors.white,
       progressBarWidth: 52.0,
       trackWidth: 52.0,
