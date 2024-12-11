@@ -36,7 +36,7 @@ class Carousel extends StatelessWidget {
                       children: [
                         const SizedBox(height: 32),
                         Text(
-                          '£${card.saldoCarta}',
+                          '\$${card.saldoCarta}',
                           style: const TextStyle(
                             fontSize: 16,
                             color: Colors.green,
@@ -69,7 +69,7 @@ class Carousel extends StatelessWidget {
                     top: 8,
                     right: 16,
                     child: Image.asset(
-                      getLogoForCardBankingNetwork(card.circuito),
+                      getLogoForCards(card.circuito),
                       width: 60,
                       height: 60,
                       fit: BoxFit.contain,
@@ -103,7 +103,7 @@ class Carousel extends StatelessWidget {
   }
 }
 
-String getLogoForCardBankingNetwork(String circuit) {
+String getLogoForCards(String circuit) {
     switch (circuit){
       case 'Visa':
         return 'assets/cardLogos/visa.png';
