@@ -9,9 +9,6 @@ class TransactionsListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Transazioni'),
-      ),
       body: transactions.isEmpty
           ? Center(child: Text('Nessuna transazione disponibile.'))
           : ListView.builder(
