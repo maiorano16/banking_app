@@ -8,6 +8,7 @@ class Balance {
   double cost;
   String startPeriod;
   String finalPeriod;
+  double income;
 
 
   Balance({
@@ -17,6 +18,7 @@ class Balance {
     required this.cost,
     required this.startPeriod,
     required this.finalPeriod,
+    required this.income,
   });
 
 
@@ -28,6 +30,7 @@ class Balance {
       cost: (json['expense_cost'] as num).toDouble(),
       startPeriod: json['start_period'],
       finalPeriod: json['final_period'],
+      income: (json['income'] as num).toDouble(),
     );
   }
 
