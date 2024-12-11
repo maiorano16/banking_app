@@ -15,7 +15,7 @@ class _BalancePageState extends State<BalancePage> {
     return await loadBalanceFromJson();
   }
 
-  List<double> _calculatePercentages(Balance balance) {
+   List<double> _calculatePercentages(Balance balance) {
     double total = balance.totalMoneyInBank + balance.totalSavings + balance.cost;
     double moneyInBankPercentage = balance.totalMoneyInBank / total;
     double costPercentage = balance.cost / total;
@@ -59,21 +59,21 @@ class _BalancePageState extends State<BalancePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Balance'),
+        title: const Text('Balance'),
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             FutureBuilder<List<Balance>>(
               future: loadBalanceData(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
-                  return Center(child: Text('Errore nel caricamento dei dati'));
+                  return const Center(child: Text('Errore nel caricamento dei dati'));
                 } else if (snapshot.hasData) {
                   final balances = snapshot.data!;
                   final selectedBalance = balances.firstWhere((balance) => balance.period == selectedPeriod);
@@ -82,7 +82,7 @@ class _BalancePageState extends State<BalancePage> {
 
                   return CircularBar(
                     values: percentages,
-                    colors: [
+                    colors: const [
                       Color(0xFF29D3E8),
                       Color.fromARGB(255, 255, 5, 5),
                       Color.fromARGB(255, 225, 255, 0),
@@ -91,7 +91,7 @@ class _BalancePageState extends State<BalancePage> {
                     innerText: '                   Period: \n(${selectedBalance.startPeriod}) - (${selectedBalance.finalPeriod})',
                   );
                 } else {
-                  return Center(child: Text('Nessun dato disponibile'));
+                  return const Center(child: Text('Nessun dato disponibile'));
                 }
               },
             ),
@@ -99,9 +99,9 @@ class _BalancePageState extends State<BalancePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _buildPeriodButton('Settimana', 'weekly'),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 _buildPeriodButton('Mese', 'monthly'),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 _buildPeriodButton('Anno', 'annual'),
 
               ],
