@@ -19,6 +19,7 @@ class Balance {
     required this.finalPeriod,
   });
 
+
   factory Balance.fromJson(Map<String, dynamic> json){
     return Balance(
       period: json['period'],
@@ -29,19 +30,15 @@ class Balance {
       finalPeriod: json['final_period'],
     );
   }
-   double get balance {
-    return totalMoneyInBank + totalSavings - cost;
-  }
+
+  double get balance => totalMoneyInBank + totalSavings - cost;
+
 }
 
-Future<List<Balance>> loadBalanceFromJson() async {
-  try {
-    final String response = await rootBundle.loadString('assets/balance.json');
-    final Map<String, dynamic> data = json.decode(response);
-    final List<dynamic> balanceList = data['balances'];
-    return balanceList.map((json) => Balance.fromJson(json)).toList();
-  } catch (e) {
-    print('Errore nel caricamento dei dati: $e');
-    rethrow; 
-  }
+Future<List<Balance>> loadBalanceFromJson() async{
+  final String response = await rootBundle.loadString('assets/balance.json');
+  final Map<String, dynamic> data = json.decode(response);
+   final List<dynamic> balanceList = data['balances'];
+  return balanceList.map((json) => Balance.fromJson(json)).toList();
+
 }
