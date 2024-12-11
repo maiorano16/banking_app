@@ -30,7 +30,7 @@ class TransactionsListPage extends StatelessWidget {
                             Row(
                               children: [
                                 Image.asset(
-                                  getLogoForTransactionService(transaction.service),
+                                  getLogoForTransactions(transaction.service),
                                   width: 40,
                                   height: 40,
                                   fit: BoxFit.contain,
@@ -92,7 +92,7 @@ class TransactionsListPage extends StatelessWidget {
     );
   }
 
-  String getLogoForTransactionService(String service) {
+  String getLogoForTransactions(String service) {
     switch (service) {
       case 'Netflix':
         return 'assets/transactionLogos/netflix.png';
