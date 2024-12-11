@@ -6,7 +6,8 @@
         "total_savings": 2000,
         "expense_cost": 500,
         "start_period": "2024-12-09",
-        "final_period": "2024-12-15"
+        "final_period": "2024-12-15",
+        "income": 700
       },
       {
         "period": "monthly",
@@ -14,7 +15,8 @@
         "total_savings": 5000,
         "expense_cost": 1200,
         "start_period": "2024-12-01",
-        "final_period": "2024-12-31"
+        "final_period": "2024-12-31",
+        "income": 7000
 
       },
       {
@@ -23,7 +25,8 @@
         "total_savings": 45000,
         "expense_cost": 30000,
         "start_period": "2024-01-01",
-        "final_period": "2024-12-31"
+        "final_period": "2024-12-31",
+        "income": 360000
       }
     ]
   }
