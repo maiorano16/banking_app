@@ -32,7 +32,7 @@ dependencies:
     sdk: flutter
   card_swiper : ^3.0.0
   group_list_view: ^1.1.1
-  multi_circular_slider: ^1.1.0  
+  circular_gradient_progress: ^1.1.9
 
 
   # The following adds the Cupertino Icons font to your application.
