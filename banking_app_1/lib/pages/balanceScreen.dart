@@ -1,6 +1,6 @@
+import 'package:circular_gradient_progress/circular_gradient_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:banking_app_1/models/balance_model.dart';
-import 'package:circular_gradient_progress/circular_gradient_progress.dart';
 
 class BalancePage extends StatefulWidget {
   @override
@@ -16,10 +16,16 @@ class _BalancePageState extends State<BalancePage> {
     double total =
         balance.totalMoneyInBank + balance.totalSavings + balance.cost;
     double moneyInBankPercentage = balance.totalMoneyInBank / total * 100;
+    double incomePercentage = balance.income / total * 100;
     double costPercentage = balance.cost / total * 100;
     double savingsPercentage = balance.totalSavings / total * 100;
 
-    return [moneyInBankPercentage, savingsPercentage, costPercentage];
+    return [
+      moneyInBankPercentage,
+      incomePercentage,
+      savingsPercentage,
+      costPercentage
+    ];
   }
 
   Future<List<Balance>> loadBalanceData() async {
@@ -55,30 +61,25 @@ class _BalancePageState extends State<BalancePage> {
                   totalAmount = selectedBalance.totalMoneyInBank +
                       selectedBalance.totalSavings +
                       selectedBalance.cost;
-
-                  String periodLabel = selectedPeriod == 'weekly'
-                      ? 'Settimana'
-                      : selectedPeriod == 'monthly'
-                          ? 'Mese'
-                          : 'Anno';
-
                   return Column(
                     children: [
                       Stack(
                         alignment: Alignment.center,
                         children: [
                           CircularGradientCombineWidget(
-                            size: 200,
+                            size: 220,
                             duration: Duration(seconds: 3),
                             centerCircleSizeRatio: 0.11,
                             sweepAngles: [
                               percentages[0],
                               percentages[1],
                               percentages[2],
+                              percentages[3],
                             ],
-                            gapRatio: 0.25,
+                            gapRatio: 0.15,
                             backgroundColors: [
                               Colors.blue.withOpacity(0.2),
+                              Color.fromARGB(255, 0, 255, 0).withOpacity(0.2),
                               const Color.fromARGB(255, 225, 255, 0)
                                   .withOpacity(0.2),
                               Colors.red.withOpacity(0.2),
@@ -87,6 +88,10 @@ class _BalancePageState extends State<BalancePage> {
                               [
                                 Color.fromARGB(255, 0, 89, 255),
                                 Color.fromARGB(255, 245, 62, 138)
+                              ],
+                              [
+                                Color.fromARGB(255, 0, 255, 0),
+                                Color.fromARGB(255, 144, 238, 144),
                               ],
                               [
                                 Color.fromARGB(255, 255, 191, 0),
@@ -121,22 +126,14 @@ class _BalancePageState extends State<BalancePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Informazioni per il periodo: $periodLabel',
+                                'Informazioni per il periodo: ${selectedBalance.startPeriod} - ${selectedBalance.finalPeriod}',
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(height: 10),
-                              Text(
-                                  'Totale: \$${totalAmount.toStringAsFixed(2)}'),
-                              SizedBox(height: 10),
-                              Text(
-                                  'In banca: ${percentages[0].toStringAsFixed(2)}%'),
-                              Text(
-                                  'Risparmi: ${percentages[1].toStringAsFixed(2)}%'),
-                              Text(
-                                  'Costi: ${percentages[2].toStringAsFixed(2)}%'),
+                              SizedBox(height: 20),
+                              buildIconList(selectedBalance),
                             ],
                           ),
                         ),
@@ -164,4 +161,38 @@ class _BalancePageState extends State<BalancePage> {
       child: Text(label),
     );
   }
+}
+
+Widget buildIconWithText(String text, Color iconColor) {
+  return Row(
+    children: [
+      Container(
+        decoration: BoxDecoration(
+          color: iconColor,
+          shape: BoxShape.circle,
+        ),
+        padding: EdgeInsets.all(8),
+      ),
+      SizedBox(width: 10),
+      Text(
+        text,
+        style: TextStyle(fontSize: 16),
+      ),
+    ],
+  );
+}
+
+Widget buildIconList(Balance balance) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      buildIconWithText('In banca: \$${balance.totalMoneyInBank}', Colors.blue),
+      SizedBox(height: 16),
+      buildIconWithText('Entrate: \$${balance.income}', const Color.fromARGB(255, 0, 255, 38)),
+      SizedBox(height: 16),
+      buildIconWithText('Risparmi: \$${balance.totalSavings}', const Color.fromARGB(255, 212, 255, 0)),
+      SizedBox(height: 16),
+      buildIconWithText('Spese: \$${balance.cost}', Colors.red),
+    ],
+  );
 }
