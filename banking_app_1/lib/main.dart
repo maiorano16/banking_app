@@ -1,4 +1,5 @@
 import 'package:banking_app_1/pages/balanceScreen.dart';
+import 'package:banking_app_1/pages/cardScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
