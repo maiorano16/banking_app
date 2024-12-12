@@ -1,6 +1,10 @@
-import 'package:circular_gradient_progress/circular_gradient_progress.dart';
+import 'package:banking_app_1/widgets/PeriodButton.dart';
+import 'package:banking_app_1/widgets/circular_progres_bar_balance.dart';
+import 'package:banking_app_1/widgets/iconList.dart';
 import 'package:flutter/material.dart';
 import 'package:banking_app_1/models/balance_model.dart';
+
+import '../utility/percentage_calculator.dart';
 
 class BalancePage extends StatefulWidget {
   @override
@@ -11,22 +15,7 @@ class _BalancePageState extends State<BalancePage> {
   String selectedPeriod = 'weekly';
   late List<double> percentages;
   late double totalAmount;
-
-  List<double> _calculatePercentages(Balance balance) {
-    double total =
-        balance.totalMoneyInBank + balance.totalSavings + balance.cost;
-    double moneyInBankPercentage = balance.totalMoneyInBank / total * 100;
-    double incomePercentage = balance.income / total * 100;
-    double costPercentage = balance.cost / total * 100;
-    double savingsPercentage = balance.totalSavings / total * 100;
-
-    return [
-      moneyInBankPercentage,
-      incomePercentage,
-      savingsPercentage,
-      costPercentage
-    ];
-  }
+  late Balance selectedBalance;
 
   Future<List<Balance>> loadBalanceData() async {
     return await loadBalanceFromJson();
@@ -54,10 +43,10 @@ class _BalancePageState extends State<BalancePage> {
                       child: Text('Errore nel caricamento dei dati'));
                 } else if (snapshot.hasData) {
                   final balances = snapshot.data!;
-                  final selectedBalance = balances.firstWhere(
+                  selectedBalance = balances.firstWhere(
                       (balance) => balance.period == selectedPeriod);
 
-                  percentages = _calculatePercentages(selectedBalance);
+                  percentages = calculatePercentages(selectedBalance);
                   totalAmount = selectedBalance.totalMoneyInBank +
                       selectedBalance.totalSavings +
                       selectedBalance.cost;
@@ -66,24 +55,8 @@ class _BalancePageState extends State<BalancePage> {
                       Stack(
                         alignment: Alignment.center,
                         children: [
-                          CircularGradientCombineWidget(
-                            size: 220,
-                            duration: Duration(seconds: 3),
-                            centerCircleSizeRatio: 0.11,
-                            sweepAngles: [
-                              percentages[0],
-                              percentages[1],
-                              percentages[2],
-                              percentages[3],
-                            ],
-                            gapRatio: 0.15,
-                            backgroundColors: [
-                              Colors.blue.withOpacity(0.2),
-                              Color.fromARGB(255, 0, 255, 0).withOpacity(0.2),
-                              const Color.fromARGB(255, 225, 255, 0)
-                                  .withOpacity(0.2),
-                              Colors.red.withOpacity(0.2),
-                            ],
+                          CircularGradientProgress(
+                            sweepAngles: percentages,
                             gradientColors: const [
                               [
                                 Color.fromARGB(255, 0, 89, 255),
@@ -91,7 +64,7 @@ class _BalancePageState extends State<BalancePage> {
                               ],
                               [
                                 Color.fromARGB(255, 0, 255, 0),
-                                Color.fromARGB(255, 144, 238, 144),
+                                Color.fromARGB(255, 144, 238, 144)
                               ],
                               [
                                 Color.fromARGB(255, 255, 191, 0),
@@ -102,6 +75,14 @@ class _BalancePageState extends State<BalancePage> {
                                 Color(0xff00FCD0)
                               ],
                             ],
+                            backgroundColors: [
+                              Colors.blue.withOpacity(0.2),
+                              const Color.fromARGB(255, 0, 255, 0)
+                                  .withOpacity(0.2),
+                              const Color.fromARGB(255, 225, 255, 0)
+                                  .withOpacity(0.2),
+                              Colors.red.withOpacity(0.2),
+                            ],
                           ),
                         ],
                       ),
@@ -109,11 +90,38 @@ class _BalancePageState extends State<BalancePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          _buildPeriodButton('Settimana', 'weekly'),
+                          PeriodButton(
+                            label: 'Settimana',
+                            period: 'weekly',
+                            onPressed: () {
+                              setState(() {
+                                selectedPeriod = 'weekly';
+                              });
+                            },
+                            isSelected: selectedPeriod == 'weekly',
+                          ),
                           const SizedBox(width: 10),
-                          _buildPeriodButton('Mese', 'monthly'),
+                          PeriodButton(
+                            label: 'Mese',
+                            period: 'monthly',
+                            onPressed: () {
+                              setState(() {
+                                selectedPeriod = 'monthly';
+                              });
+                            },
+                            isSelected: selectedPeriod == 'monthly',
+                          ),
                           const SizedBox(width: 10),
-                          _buildPeriodButton('Anno', 'annual'),
+                          PeriodButton(
+                            label: 'Anno',
+                            period: 'annual',
+                            onPressed: () {
+                              setState(() {
+                                selectedPeriod = 'annual';
+                              });
+                            },
+                            isSelected: selectedPeriod == 'annual',
+                          ),
                         ],
                       ),
                       SizedBox(height: 20),
@@ -133,7 +141,7 @@ class _BalancePageState extends State<BalancePage> {
                                 ),
                               ),
                               SizedBox(height: 20),
-                              buildIconList(selectedBalance),
+                              IconList(balance: selectedBalance),
                             ],
                           ),
                         ),
@@ -150,49 +158,4 @@ class _BalancePageState extends State<BalancePage> {
       ),
     );
   }
-
-  Widget _buildPeriodButton(String label, String period) {
-    return ElevatedButton(
-      onPressed: () {
-        setState(() {
-          selectedPeriod = period;
-        });
-      },
-      child: Text(label),
-    );
-  }
-}
-
-Widget buildIconWithText(String text, Color iconColor) {
-  return Row(
-    children: [
-      Container(
-        decoration: BoxDecoration(
-          color: iconColor,
-          shape: BoxShape.circle,
-        ),
-        padding: EdgeInsets.all(8),
-      ),
-      SizedBox(width: 10),
-      Text(
-        text,
-        style: TextStyle(fontSize: 16),
-      ),
-    ],
-  );
-}
-
-Widget buildIconList(Balance balance) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      buildIconWithText('In banca: \$${balance.totalMoneyInBank}', Colors.blue),
-      SizedBox(height: 16),
-      buildIconWithText('Entrate: \$${balance.income}', const Color.fromARGB(255, 0, 255, 38)),
-      SizedBox(height: 16),
-      buildIconWithText('Risparmi: \$${balance.totalSavings}', const Color.fromARGB(255, 212, 255, 0)),
-      SizedBox(height: 16),
-      buildIconWithText('Spese: \$${balance.cost}', Colors.red),
-    ],
-  );
 }
