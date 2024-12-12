@@ -1,5 +1,6 @@
 import 'package:banking_app_1/widgets/PeriodButton.dart';
 import 'package:banking_app_1/widgets/circular_progres_bar_balance.dart';
+import 'package:banking_app_1/widgets/flippableCard.dart';
 import 'package:banking_app_1/widgets/iconList.dart';
 import 'package:flutter/material.dart';
 import 'package:banking_app_1/models/balance_model.dart';
@@ -125,24 +126,48 @@ class _BalancePageState extends State<BalancePage> {
                         ],
                       ),
                       SizedBox(height: 20),
-                      Card(
-                        elevation: 5,
-                        margin: EdgeInsets.all(10),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Informazioni per il periodo: ${selectedBalance.startPeriod} - ${selectedBalance.finalPeriod}',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                      FlippableCard(
+                        front: Card(
+                          elevation: 5,
+                          margin: const EdgeInsets.all(10),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Informazioni per il periodo: ${selectedBalance.startPeriod} - ${selectedBalance.finalPeriod}',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 20),
-                              IconList(balance: selectedBalance),
-                            ],
+                                const SizedBox(height: 20),
+                                IconList(balance: selectedBalance),
+                              ],
+                            ),
+                          ),
+                        ),
+                        back: Card(
+                          elevation: 5,
+                          margin: const EdgeInsets.all(10),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Altri dettagli:',
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                Text(
+                                    'Puoi aggiungere qui altre informazioni sul retro.'),
+                              ],
+                            ),
                           ),
                         ),
                       ),
