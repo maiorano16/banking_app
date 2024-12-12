@@ -66,7 +66,7 @@ class _BalancePageState extends State<BalancePage> {
                       selectedBalance.totalSavings +
                       selectedBalance.cost;
 
-                  final balanceData = generateBalanceData(balances);
+                 // final balanceData = generateBalanceData(balances);
 
                   return Column(
                     children: [
