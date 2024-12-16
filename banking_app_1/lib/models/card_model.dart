@@ -22,6 +22,19 @@ class Carta {
     required this.iban,
   });
 
+  Map<String, dynamic> toJson() {
+    return {
+      'cardId': cardId,
+      'scadenzaCarta': scadenzaCarta,
+      'saldoCarta': saldoCarta,
+      'numeroCarta': numeroCarta,
+      'tipoAccount': tipoAccount,
+      'iban': iban,
+      'tipoCarta': tipoCarta,
+      'circuito': circuito,
+    };
+  }
+
   factory Carta.fromJson(Map<String, dynamic> json){
     return Carta(
       tipoCarta: json['tipo_carta'],
