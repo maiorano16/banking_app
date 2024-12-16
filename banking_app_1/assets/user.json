@@ -10,28 +10,6 @@
         "profession": "Ingegnere",
         "gender": "Maschio",
         "user_id": "U123456"
-      },
-      {
-        "first_name": "Giulia",
-        "last_name": "Bianchi",
-        "date_of_birth": "1990-05-22",
-        "place_of_birth": "Firenze",
-        "residence": "Roma",
-        "age": 34,
-        "profession": "Designer",
-        "gender": "Femmina",
-        "user_id": "U654321"
-      },
-      {
-        "first_name": "Luca",
-        "last_name": "Verdi",
-        "date_of_birth": "1978-03-11",
-        "place_of_birth": "Torino",
-        "residence": "Napoli",
-        "age": 46,
-        "profession": "Medico",
-        "gender": "Maschio",
-        "user_id": "U789123"
       }
     ]
   }
