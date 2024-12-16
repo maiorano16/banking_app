@@ -28,7 +28,7 @@ class Utenti {
     return Utenti(
       nome: json['first_name'],
       cognome: json['last_name'],
-      dataNascita: json['date_of_birt'],
+      dataNascita: json['date_of_birth'],
       luogoNascita: json['place_of_birth'],
       residenza: json['residence'],
       eta: json['age'],
@@ -38,13 +38,26 @@ class Utenti {
 
     );
   }
+  Map<String, dynamic> toJson() {
+    return {
+      'nome': nome,
+      'cognome': cognome,
+      'residenza': residenza,
+      'professione': professione,
+      'eta': eta,
+      'sesso': sesso,
+      'dataNascita': dataNascita,
+      'luogoNascita': luogoNascita,
+      'userId': userId,
+    };
+  }
 }
 
 
 Future<List<Utenti>> loadUtentiFromJson() async{
-  final String response = await rootBundle.loadString('assets/utenti.json');
+  final String response = await rootBundle.loadString('assets/user.json');
   final Map<String, dynamic> data = json.decode(response);
-   final List<dynamic> utentiList = data['utenti'];
+   final List<dynamic> utentiList = data['users'];
   return utentiList.map((json) => Utenti.fromJson(json)).toList();
 
 }
