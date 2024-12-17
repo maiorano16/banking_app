@@ -1,4 +1,4 @@
-import 'package:banking_app_1/models/balance_model.dart';
+/*import 'package:banking_app_1/models/balance_model.dart';
 import 'package:banking_app_1/widgets/flippableCard.dart';
 
 List<BalanceData> generateBalanceData(List<Balance> balances) {
@@ -10,4 +10,4 @@ List<BalanceData> generateBalanceData(List<Balance> balances) {
       balance.cost,
     );
   }).toList();
-}
+}*/
