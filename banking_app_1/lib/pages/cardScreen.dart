@@ -11,7 +11,7 @@ class CardScreen extends StatefulWidget {
 }
 
 class _CardScreenState extends State<CardScreen> {
-  List<Carta> carte = []; // Cambia da List<int> a List<Carta>
+  List<Carta> carte = [];
   List<Transaction> transactions = [];
   String selectedCardId = '';
 
@@ -25,7 +25,6 @@ class _CardScreenState extends State<CardScreen> {
     }).catchError((e) {
       print("Errore durante il caricamento delle transazioni: $e");
     });
-    // Carica le carte iniziali
     loadCarteFromJson().then((loadedCards) {
       setState(() {
         carte = loadedCards;
@@ -44,7 +43,6 @@ class _CardScreenState extends State<CardScreen> {
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () async {
-              // Naviga alla schermata di aggiunta carta e aspettati una nuova carta
               final newCard = await Navigator.push<Carta>(
                 context,
                 MaterialPageRoute(
@@ -54,9 +52,8 @@ class _CardScreenState extends State<CardScreen> {
 
               if (newCard != null) {
                 setState(() {
-                  // Aggiungi la nuova carta alla lista delle carte
                   carte.add(newCard);
-                  selectedCardId = newCard.cardId; // Se vuoi selezionare la carta appena aggiunta
+                  selectedCardId = newCard.cardId; 
                 });
               }
             },
