@@ -1,6 +1,7 @@
 import 'package:banking_app_1/models/user_model.dart';
 import 'package:banking_app_1/widgets/profile_card.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class UserInfoSection extends StatelessWidget {
   final Utenti user;
@@ -24,7 +25,7 @@ class UserInfoSection extends StatelessWidget {
         Center(
           child: CircleAvatar(
             radius: 60,
-            backgroundImage: AssetImage('assets/userProfileImage/barella.png'),
+            backgroundImage: const AssetImage('assets/userProfileImmage/barella.png'),
             backgroundColor: Colors.grey[200],
           ),
         ),
@@ -54,7 +55,7 @@ class UserInfoSection extends StatelessWidget {
             SizedBox(width: 10),
             Expanded(
               child: ProfileCard(
-                icon: Icons.male,
+                icon: getIconForGender(user.sesso),
                 title: 'Gender',
                 value: user.sesso,
               ),
@@ -83,5 +84,17 @@ class UserInfoSection extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+IconData getIconForGender (String sesso){
+  switch(sesso){
+    case 'Maschio':
+    return FontAwesomeIcons.male;
+    case 'Femmina': 
+    return FontAwesomeIcons.female;
+    default:
+    return Icons.person;
+
   }
 }
