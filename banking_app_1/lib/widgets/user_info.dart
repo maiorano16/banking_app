@@ -15,7 +15,7 @@ class UserInfoSection extends StatelessWidget {
       children: [
         Text(
           'Hello, ${user.nome}!',
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
             color: Colors.blueAccent,
@@ -25,7 +25,7 @@ class UserInfoSection extends StatelessWidget {
         Center(
           child: CircleAvatar(
             radius: 60,
-            backgroundImage: const AssetImage('assets/userProfileImmage/barella.png'),
+            backgroundImage: const AssetImage('assets/userProfileImmage/userIcon.png'),
             backgroundColor: Colors.grey[200],
           ),
         ),
