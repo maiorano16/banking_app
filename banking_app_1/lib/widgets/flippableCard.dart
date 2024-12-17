@@ -1,4 +1,4 @@
-import 'package:banking_app_1/models/balance_model.dart';
+/*import 'package:banking_app_1/models/balance_model.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -76,7 +76,7 @@ class _FlippableCardState extends State<FlippableCard>
   }
 }
 
-class FlippableCardPage extends StatelessWidget {
+      class FlippableCardPage extends StatelessWidget {
   final Balance selectedBalance;
 
   FlippableCardPage({required this.selectedBalance});
@@ -156,4 +156,4 @@ class BalanceData {
   final String finalPeriod;
   final double income;
   final double cost;
-}
+*/
