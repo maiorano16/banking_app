@@ -1,5 +1,8 @@
+import 'package:banking_app_1/utility/validations_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:banking_app_1/models/user_model.dart';
+import 'package:banking_app_1/widgets/custom_text_field.dart';
+import 'package:banking_app_1/widgets/save_button.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final Utenti user;
@@ -12,6 +15,7 @@ class EditProfileScreen extends StatefulWidget {
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
   final _formKey = GlobalKey<FormState>();
+
   late String nome;
   late String cognome;
   late String residenza;
@@ -32,32 +36,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     gender = widget.user.sesso;
   }
 
-  bool _validateDateFormat(String date) {
-    final regex = RegExp(r'^\d{4}-\d{2}-\d{2}$');
-    if (!regex.hasMatch(date)) {
-      return false; 
-    }
-
-    try {
-      final parts = date.split('-');
-      final year = int.parse(parts[0]);
-      final month = int.parse(parts[1]);
-      final day = int.parse(parts[2]);
-
-      final parsedDate = DateTime(year, month, day);
-
-      if (parsedDate.year != year ||
-          parsedDate.month != month ||
-          parsedDate.day != day) {
-        return false;
-      }
-
-      return true;
-    } catch (e) {
-      return false; 
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,9 +50,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextFormField(
+                CustomTextField(
+                  label: 'Nome',
                   initialValue: nome,
-                  decoration: const InputDecoration(labelText: 'Nome'),
                   onChanged: (value) => nome = value,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -84,9 +62,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   },
                 ),
                 const SizedBox(height: 16),
-                TextFormField(
+                CustomTextField(
+                  label: 'Cognome',
                   initialValue: cognome,
-                  decoration: const InputDecoration(labelText: 'Cognome'),
                   onChanged: (value) => cognome = value,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -96,22 +74,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   },
                 ),
                 const SizedBox(height: 16),
-                TextFormField(
+                CustomTextField(
+                  label: 'Residenza',
                   initialValue: residenza,
-                  decoration: const InputDecoration(labelText: 'Residenza'),
                   onChanged: (value) => residenza = value,
                 ),
                 const SizedBox(height: 16),
-                TextFormField(
+                CustomTextField(
+                  label: 'Professione',
                   initialValue: professione,
-                  decoration: const InputDecoration(labelText: 'Professione'),
                   onChanged: (value) => professione = value,
                 ),
                 const SizedBox(height: 16),
-                TextFormField(
+                CustomTextField(
+                  label: 'Luogo di nascita',
                   initialValue: luogoNascita,
-                  decoration:
-                      const InputDecoration(labelText: 'Luogo di nascita'),
                   onChanged: (value) => luogoNascita = value,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -121,22 +98,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   },
                 ),
                 const SizedBox(height: 16),
-                TextFormField(
+                CustomTextField(
+                  label: 'Data di nascita (aaaa-mm-gg)',
                   initialValue: dataNascita,
-                  decoration: const InputDecoration(
-                      labelText: 'Data di nascita (aaaa-mm-gg)'),
                   onChanged: (value) {
-                    if (_validateDateFormat(value)) {
+                    if (ValidationUtils.validateDateFormat(value)) {
                       setState(() {
                         dataNascita = value;
-                        widget.user.eta = _calculateAge(value);
+                        widget.user.eta = ValidationUtils.calculateAge(value);
                       });
                     }
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'La data di nascita è obbligatoria.';
-                    } else if (!_validateDateFormat(value)) {
+                    } else if (!ValidationUtils.validateDateFormat(value)) {
                       return 'Formato data non valido (usa aaaa-mm-gg).';
                     }
                     return null;
@@ -162,29 +138,25 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   },
                 ),
                 const SizedBox(height: 32),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        Navigator.pop(
-                          context,
-                          Utenti(
-                            nome: nome,
-                            cognome: cognome,
-                            residenza: residenza,
-                            professione: professione,
-                            eta: _calculateAge(
-                                dataNascita),
-                            sesso: gender,
-                            dataNascita: dataNascita,
-                            luogoNascita: luogoNascita,
-                            userId: widget.user.userId,
-                          ),
-                        );
-                      }
-                    },
-                    child: const Text('Salva'),
-                  ),
+                SaveButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      Navigator.pop(
+                        context,
+                        Utenti(
+                          nome: nome,
+                          cognome: cognome,
+                          residenza: residenza,
+                          professione: professione,
+                          eta: ValidationUtils.calculateAge(dataNascita),
+                          sesso: gender,
+                          dataNascita: dataNascita,
+                          luogoNascita: luogoNascita,
+                          userId: widget.user.userId,
+                        ),
+                      );
+                    }
+                  },
                 ),
               ],
             ),
@@ -192,43 +164,5 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
       ),
     );
-  }
-
-  int _calculateAge(String birthDate) {
-    final parts = birthDate.split('-');
-    final year = int.parse(parts[0]);
-    final month = int.parse(parts[1]);
-    final day = int.parse(parts[2]);
-
-    final birthDateTime = DateTime(year, month, day);
-    final today = DateTime.now();
-
-    int age = today.year - birthDateTime.year;
-
-    if (today.month < birthDateTime.month ||
-        (today.month == birthDateTime.month && today.day < birthDateTime.day)) {
-      age--;
-    }
-
-    return age;
-  }
-}
-
-bool _validateDateFormat(String date) {
-  final dateRegex = RegExp(r'^\d{4}-\d{2}-\d{2}$');
-  if (!dateRegex.hasMatch(date)) return false;
-
-  try {
-    final parts = date.split('-');
-    final year = int.parse(parts[0]);
-    final month = int.parse(parts[1]);
-    final day = int.parse(parts[2]);
-
-    final dateTime = DateTime(year, month, day);
-    return dateTime.year == year &&
-        dateTime.month == month &&
-        dateTime.day == day;
-  } catch (e) {
-    return false;
   }
 }
