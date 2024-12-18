@@ -1,6 +1,5 @@
 import 'package:banking_app_1/models/user_model.dart';
 import 'package:banking_app_1/pages/editProfileScreen.dart';
-import 'package:banking_app_1/widgets/user_extra_info.dart';
 import 'package:banking_app_1/widgets/user_info.dart';
 import 'package:flutter/material.dart';
 
@@ -76,22 +75,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     UserInfoSection(user: user),
                     const SizedBox(height: 20),
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            showMoreInfo = !showMoreInfo;
-                          });
-                        },
-                        child: Text(showMoreInfo
-                            ? 'Nascondi Altre Informazioni'
-                            : 'Mostra Altre Informazioni'),
-                      ),
-                    ),
-                    ExtraInfoSection(
-                      user: user,
-                      showMoreInfo: showMoreInfo,
-                    ),
                   ],
                 ),
               ),
