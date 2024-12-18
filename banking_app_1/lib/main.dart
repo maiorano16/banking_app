@@ -1,5 +1,6 @@
 import 'package:banking_app_1/pages/balanceScreen.dart';
 import 'package:banking_app_1/pages/cardScreen.dart';
+import 'package:banking_app_1/pages/mainAccountScreen.dart';
 import 'package:banking_app_1/pages/userProfileScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ProfileScreen(),
+      home: MainAccountPage(),
       debugShowCheckedModeBanner: false,
     );
   }
