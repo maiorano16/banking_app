@@ -13,14 +13,6 @@ class UserInfoSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Hello, ${user.nome}!',
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.blueAccent,
-          ),
-        ),
         const SizedBox(height: 20),
         Center(
           child: CircleAvatar(
@@ -48,8 +40,8 @@ class UserInfoSection extends StatelessWidget {
             Expanded(
               child: ProfileCard(
                 icon: Icons.cake,
-                title: 'Età',
-                value: user.eta.toString(),
+                title: 'Data di nascita',
+                value: user.dataNascita,
               ),
             ),
             SizedBox(width: 10),
@@ -78,6 +70,18 @@ class UserInfoSection extends StatelessWidget {
                 icon: Icons.location_on,
                 title: 'Location',
                 value: user.residenza,
+              ),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Expanded(
+              child: ProfileCard(
+                icon: Icons.fingerprint,
+                title: 'User Id',
+                value: user.userId,
               ),
             ),
           ],
