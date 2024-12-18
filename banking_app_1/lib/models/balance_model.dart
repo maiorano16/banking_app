@@ -39,7 +39,7 @@ class Balance {
 }
 
 Future<List<Balance>> loadBalanceFromJson() async{
-  final String response = await rootBundle.loadString('assets/balance.json');
+  final String response = await rootBundle.loadString('assets/fileJson/balance.json');
   final Map<String, dynamic> data = json.decode(response);
    final List<dynamic> balanceList = data['balances'];
   return balanceList.map((json) => Balance.fromJson(json)).toList();

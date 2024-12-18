@@ -55,7 +55,7 @@ class Utenti {
 
 
 Future<List<Utenti>> loadUtentiFromJson() async{
-  final String response = await rootBundle.loadString('assets/user.json');
+  final String response = await rootBundle.loadString('assets/fileJson/user.json');
   final Map<String, dynamic> data = json.decode(response);
    final List<dynamic> utentiList = data['users'];
   return utentiList.map((json) => Utenti.fromJson(json)).toList();

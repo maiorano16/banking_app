@@ -51,7 +51,7 @@ class Carta {
 }
 
 Future<List<Carta>> loadCarteFromJson() async{
-  final String response = await rootBundle.loadString('assets/card.json');
+  final String response = await rootBundle.loadString('assets/fileJson/card.json');
   final Map<String, dynamic> data = json.decode(response);
    final List<dynamic> carteList = data['cards'];
   return carteList.map((json) => Carta.fromJson(json)).toList();

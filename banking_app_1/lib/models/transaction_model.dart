@@ -37,7 +37,7 @@ class Transaction {
 
 }
 Future<List<Transaction>> loadTransactionFromJson() async {
-  final String response = await rootBundle.loadString('assets/transaction.json');
+  final String response = await rootBundle.loadString('assets/fileJson/transaction.json');
   final Map<String, dynamic> data = json.decode(response);
   final List<dynamic> transactionsList = data['transactions'];
   return transactionsList.map((json) => Transaction.fromJson(json)).toList();
