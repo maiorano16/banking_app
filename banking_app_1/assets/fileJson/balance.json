@@ -1,0 +1,32 @@
+{
+    "balances": [
+      {
+        "period": "weekly",
+        "total_money_in_bank": 10000,
+        "total_savings": 2000,
+        "expense_cost": 500,
+        "start_period": "2024-12-09",
+        "final_period": "2024-12-15",
+        "income": 700
+      },
+      {
+        "period": "monthly",
+        "total_money_in_bank": 150000,
+        "total_savings": 5000,
+        "expense_cost": 1200,
+        "start_period": "2024-12-01",
+        "final_period": "2024-12-31",
+        "income": 7000
+
+      },
+      {
+        "period": "annual",
+        "total_money_in_bank": 1000000,
+        "total_savings": 45000,
+        "expense_cost": 30000,
+        "start_period": "2024-01-01",
+        "final_period": "2024-12-31",
+        "income": 360000
+      }
+    ]
+  }

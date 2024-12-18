@@ -1,0 +1,15 @@
+{
+    "users": [
+      {
+        "first_name": "Mario",
+        "last_name": "Rossi",
+        "date_of_birth": "1985-07-15",
+        "place_of_birth": "Roma",
+        "residence": "Milano",
+        "age": 39,
+        "profession": "Ingegnere",
+        "gender": "Maschio",
+        "user_id": "U123456"
+      }
+    ]
+  }
