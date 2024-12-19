@@ -1,0 +1,37 @@
+{
+  "anno": 2023,
+  "mese": "Novembre",
+  "transazioni": [
+    {
+      "data": "2023-11-01",
+      "importo": 35.50,
+      "categoria": "Alimentari",
+      "descrizione": "Spesa al supermercato",
+      "negozio": "Supermercato Rossi",
+      "metodo_pagamento": "Carta di debito",
+      "valuta": "EUR"
+    },
+    {
+      "data": "2023-11-05",
+      "importo": 20.00,
+      "categoria": "Trasporti",
+      "descrizione": "Benzina",
+      "stazione_servizio": "ENI",
+      "metodo_pagamento": "Carta di credito",
+      "valuta": "EUR"
+    },
+    {
+      "data": "2023-11-10",
+      "importo": 50.00,
+      "categoria": "Intrattenimento",
+      "descrizione": "Cinema",
+      "cinema": "UCI Cinemas",
+      "metodo_pagamento": "Contanti",
+      "valuta": "EUR"
+    }
+  ],
+  "saldo_iniziale": 1000.00,
+  "saldo_finale": 894.50,
+  "limite_credito": 2000.00,
+  "tasso_interesse": 19.99
+}

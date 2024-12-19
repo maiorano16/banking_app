@@ -1,0 +1,42 @@
+{
+    "year": 2023,
+    "months": [
+        {
+            "month": "January",
+            "annualMainAccountTransaction": [
+                {
+                    "date": "2023-01-05",
+                    "amount": 50.00,
+                    "currency": "EUR",
+                    "category": "Groceries",
+                    "description": "Supermarket shopping",
+                    "payment_method": "Card",
+                    "store": "Coop"
+                },
+                {
+                    "date": "2023-01-10",
+                    "amount": 30.00,
+                    "currency": "EUR",
+                    "category": "Transportation",
+                    "description": "Bus subscription",
+                    "payment_method": "Bank Transfer"
+                },
+                {
+                    "date": "2023-01-15",
+                    "amount": 25.00,
+                    "currency": "USD",
+                    "category": "Travel",
+                    "description": "Flight ticket purchase",
+                    "payment_method": "Card"
+                }
+            ],
+            "total_expense": 1200.50,
+            "average_daily_expense": 38.73,
+            "categories": {
+                "Groceries": 400.00,
+                "Transportation": 300.00,
+                "Entertainment": 250.00
+            }
+        }
+    ]
+}
