@@ -1,4 +1,5 @@
 import 'package:banking_app_1/models/transaction_model.dart';
+import 'package:banking_app_1/utility/get_logo.dart';
 import 'package:flutter/material.dart';
 
 class TransactionsListPage extends StatelessWidget {
@@ -27,7 +28,7 @@ class TransactionsListPage extends StatelessWidget {
                             Row(
                               children: [
                                 Image.asset(
-                                  getLogoForTransactions(transaction.service),
+                                  getLogoForCards(transaction.service),
                                   width: 40,
                                   height: 40,
                                   fit: BoxFit.contain,
@@ -87,30 +88,5 @@ class TransactionsListPage extends StatelessWidget {
               },
             ),
     );
-  }
-
-  String getLogoForTransactions(String service) {
-    switch (service) {
-      case 'Netflix':
-        return 'assets/transactionLogos/netflix.png';
-      case 'Spotify':
-        return 'assets/transactionLogos/spotify.png';
-      case 'Amazon':
-        return 'assets/transactionLogos/amazon.png';
-      case 'Disney+':
-        return 'assets/transactionLogos/disney.png';
-      case 'Apple Store':
-        return 'assets/transactionLogos/appleStore.png';
-      case 'Red Cross':
-        return 'assets/transactionLogos/croceRossa.png';
-      case 'Ebay':
-        return 'assets/transactionLogos/ebay.png';
-      case 'Google Workspace':
-        return 'assets/transactionLogos/google.png';
-      case 'Airbnb':
-        return 'assets/transactionLogos/airbnb.png';       
-      default:
-        return 'assets/transactionLogos/money.png';
-    }
   }
 }
