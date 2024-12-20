@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'package:banking_app_1/models/mainAccountAnnualTransaction_model.dart'; // Ensure this imports the updated model
+import 'package:banking_app_1/models/mainAccountAnnualTransaction_model.dart'; 
+import 'package:banking_app_1/utility/get_logo.dart';
 import 'package:banking_app_1/widgets/main_transaction_annual.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:banking_app_1/models/card_model.dart';
-import 'package:banking_app_1/widgets/transaction_list.dart'; 
 
 class MainAccountPage extends StatefulWidget {
   const MainAccountPage({Key? key}) : super(key: key);
@@ -25,7 +25,6 @@ class _MainAccountPageState extends State<MainAccountPage> {
     _loadTransactionsFromJson();  
   }
 
-  // Load the cards from the JSON
   Future<void> _loadCarteFromJson() async {
     final String response = await rootBundle.loadString('assets/fileJson/card.json');
     final Map<String, dynamic> data = json.decode(response);
@@ -36,13 +35,12 @@ class _MainAccountPageState extends State<MainAccountPage> {
     });
   }
 
-  // Load the transactions from the updated JSON
   Future<void> _loadTransactionsFromJson() async {
     final String response = await rootBundle.loadString('assets/fileJson/mainAccountTransactionAnnual.json');  // Ensure the correct JSON file is loaded
     final Map<String, dynamic> data = json.decode(response);
     final List<dynamic> monthsList = data['months'];
 
-    // Extract the transactions from all months
+
     List<AnnualMainAccountTransaction> allTransactions = [];
     for (var month in monthsList) {
       for (var transaction in month['annualMainAccountTransaction']) {
@@ -59,7 +57,7 @@ class _MainAccountPageState extends State<MainAccountPage> {
   Widget build(BuildContext context) {
     final mainAccountCards = carte.where((card) => card.tipoAccount == 'Main account').toList();
     if (mainAccountCards.isNotEmpty) {
-      final card = mainAccountCards.first;
+      final mainCard = mainAccountCards.first;
       return Scaffold(
         appBar: AppBar(
           title: const Text('Main Account Card'),
@@ -68,7 +66,6 @@ class _MainAccountPageState extends State<MainAccountPage> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              // Carousel for the cards
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -89,7 +86,7 @@ class _MainAccountPageState extends State<MainAccountPage> {
                               children: [
                                 const SizedBox(height: 32),
                                 Text(
-                                  '\$${card.saldoCarta}',
+                                  '\$${mainCard.saldoCarta}',
                                   style: const TextStyle(
                                     fontSize: 16,
                                     color: Colors.green,
@@ -98,7 +95,7 @@ class _MainAccountPageState extends State<MainAccountPage> {
                                 ),
                                 const SizedBox(height: 30),
                                 Text(
-                                  '${card.numeroCarta}',
+                                  '${mainCard.numeroCarta}',
                                   style: const TextStyle(
                                     fontSize: 14,
                                     color: Colors.grey,
@@ -111,7 +108,7 @@ class _MainAccountPageState extends State<MainAccountPage> {
                             top: 150,
                             right: 16,
                             child: Text(
-                              card.scadenzaCarta,
+                              mainCard.scadenzaCarta,
                               style: const TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey,
@@ -122,7 +119,7 @@ class _MainAccountPageState extends State<MainAccountPage> {
                             top: 8,
                             right: 16,
                             child: Image.asset(
-                              getLogoForCards(card.circuito),
+                              getLogoForCards(mainCard.circuito),
                               width: 60,
                               height: 60,
                               fit: BoxFit.contain,
@@ -132,7 +129,7 @@ class _MainAccountPageState extends State<MainAccountPage> {
                             top: 150,
                             left: 15,
                             child: Text(
-                              card.tipoCarta,
+                              mainCard.tipoCarta,
                               style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.black87,
@@ -165,20 +162,6 @@ class _MainAccountPageState extends State<MainAccountPage> {
           child: const Text('No main account cards available'),
         ),
       );
-    }
-  }
-  
-  // Function to get the card logo (already present in your code)
-  String getLogoForCards(String circuito) {
-    switch (circuito) {
-      case 'Visa':
-        return 'assets/cardLogos/visa.png';
-      case 'MasterCard':
-        return 'assets/cardLogos/mastercard.png';
-      case 'American Express':
-        return 'assets/cardLogos/amex.png';
-      default:
-        return 'assets/cardLogos/default.png';
     }
   }
 }
