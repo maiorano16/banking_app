@@ -1,4 +1,5 @@
 import 'package:banking_app_1/models/card_model.dart';
+import 'package:banking_app_1/utility/get_logo.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
@@ -103,25 +104,3 @@ class Carousel extends StatelessWidget {
   }
 }
 
-String getLogoForCards(String circuit) {
-    switch (circuit){
-      case 'Visa':
-        return 'assets/cardLogos/visa.png';
-      case 'Mastercard':
-        return 'assets/cardLogos/mastercard.png'; 
-      case 'Hype':
-        return 'assets/cardLogos/hype.png';
-      case 'American Express':
-        return 'assets/cardLogos/americanExpress.png';
-      case 'Discover':
-        return 'assets/cardLogos/Discover.png';
-      case 'Maestro':
-        return 'assets/cardLogos/Maestro.png';
-      case 'UnionPay':
-        return 'assets/cardLogos/UnionPay.png';
-      case 'Diners Club':
-        return 'assets/cardLogos/DinersClub.png';
-      default:
-        return 'assets/cardLogos/circuito.png';  
-    }
-}
