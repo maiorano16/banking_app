@@ -1,0 +1,11 @@
+{
+    "data": [
+      {"month": "January", "value": 150},
+      {"month": "February", "value": 200},
+      {"month": "March", "value": 170},
+      {"month": "April", "value": 220},
+      {"month": "May", "value": 190},
+      {"month": "June", "value": 240}
+    ]
+}
+  
