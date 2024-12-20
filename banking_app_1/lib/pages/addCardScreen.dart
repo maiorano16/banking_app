@@ -1,5 +1,6 @@
 import 'package:banking_app_1/utility/validations_utils.dart';
 import 'package:banking_app_1/widgets/input_field.dart';
+import 'package:banking_app_1/widgets/save_button.dart';
 import 'package:flutter/material.dart';
 import 'package:banking_app_1/models/card_model.dart';
 
@@ -126,7 +127,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
               ),
               const SizedBox(height: 32),
               Center(
-                child: ElevatedButton(
+                child: SaveButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       Carta newCard = Carta(
@@ -142,7 +143,6 @@ class _AddCardScreenState extends State<AddCardScreen> {
                       Navigator.pop(context, newCard);
                     }
                   },
-                  child: const Text('Salva Carta'),
                 ),
               ),
             ],
