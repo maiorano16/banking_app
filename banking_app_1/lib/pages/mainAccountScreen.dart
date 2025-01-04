@@ -1,10 +1,11 @@
 import 'dart:convert';
-import 'package:banking_app_1/models/mainAccountAnnualTransaction_model.dart'; 
+import 'package:banking_app_1/models/mainAccountAnnualTransaction_model.dart';
 import 'package:banking_app_1/utility/get_logo.dart';
-import 'package:banking_app_1/widgets/main_transaction_annual.dart';
+import 'package:banking_app_1/widgets/mainCard_transaction.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:banking_app_1/models/card_model.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class MainAccountPage extends StatefulWidget {
   const MainAccountPage({Key? key}) : super(key: key);
@@ -15,16 +16,18 @@ class MainAccountPage extends StatefulWidget {
 
 class _MainAccountPageState extends State<MainAccountPage> {
   List<Carta> carte = [];
-  List<AnnualMainAccountTransaction> transactions = [];  
-  String selectedCardId = '';
+  List<MainCardTransaction> transactions = [];
+  List<Map<String, dynamic>> chartData = [];
 
   @override
   void initState() {
     super.initState();
     _loadCarteFromJson();
     _loadTransactionsFromJson();  
+    _loadChartData();
   }
 
+  // Caricamento dei dati delle carte
   Future<void> _loadCarteFromJson() async {
     final String response = await rootBundle.loadString('assets/fileJson/card.json');
     final Map<String, dynamic> data = json.decode(response);
@@ -35,21 +38,32 @@ class _MainAccountPageState extends State<MainAccountPage> {
     });
   }
 
+  // Caricamento delle transazioni annuali
   Future<void> _loadTransactionsFromJson() async {
-    final String response = await rootBundle.loadString('assets/fileJson/mainAccountTransactionAnnual.json');  // Ensure the correct JSON file is loaded
+    final String response = await rootBundle.loadString('assets/fileJson/mainAccountTransactionAnnual.json');
     final Map<String, dynamic> data = json.decode(response);
-    final List<dynamic> monthsList = data['months'];
+    final transactionsData = TransactionsData.fromJson(data);  // Use TransactionsData instead of AnnualReport
 
-
-    List<AnnualMainAccountTransaction> allTransactions = [];
-    for (var month in monthsList) {
-      for (var transaction in month['annualMainAccountTransaction']) {
-        allTransactions.add(AnnualMainAccountTransaction.fromJson(transaction));
-      }
+    List<MainCardTransaction> allTransactions = [];
+    
+    // Supponiamo che le transazioni siano separate per mese
+    for (var month in transactionsData.transactions) {
+      allTransactions.addAll(month.transactions);  // Aggiungi tutte le transazioni mensili
     }
 
     setState(() {
       transactions = allTransactions;
+    });
+  }
+
+  // Caricamento dei dati del grafico
+  Future<void> _loadChartData() async {
+    final String response = await rootBundle.loadString('assets/fileJson/annualExpense.json');
+    final Map<String, dynamic> data = json.decode(response);
+    final List<dynamic> dataList = data['data'];
+
+    setState(() {
+      chartData = List<Map<String, dynamic>>.from(dataList);
     });
   }
 
@@ -66,89 +80,93 @@ class _MainAccountPageState extends State<MainAccountPage> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 350,
-                    height: 200,
-                    child: Card(
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Stack(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(height: 32),
-                                Text(
-                                  '\$${mainCard.saldoCarta}',
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.green,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 30),
-                                Text(
-                                  '${mainCard.numeroCarta}',
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Positioned(
-                            top: 150,
-                            right: 16,
-                            child: Text(
-                              mainCard.scadenzaCarta,
+              // Visualizzazione della card aggiornata
+              Container(
+                width: 350,
+                height: 200,
+                child: Card(
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Stack(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 32),
+                            Text(
+                              '\$${mainCard.saldoCarta}', // Visualizza il saldo
                               style: const TextStyle(
-                                fontSize: 12,
+                                fontSize: 16,
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 30),
+                            Text(
+                              '${mainCard.numeroCarta}',
+                              style: const TextStyle(
+                                fontSize: 14,
                                 color: Colors.grey,
                               ),
                             ),
-                          ),
-                          Positioned(
-                            top: 8,
-                            right: 16,
-                            child: Image.asset(
-                              getLogoForCards(mainCard.circuito),
-                              width: 60,
-                              height: 60,
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                          Positioned(
-                            top: 150,
-                            left: 15,
-                            child: Text(
-                              mainCard.tipoCarta,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.black87,
-                              ),
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
+                      Positioned(
+                        top: 150,
+                        right: 16,
+                        child: Text(
+                          mainCard.scadenzaCarta,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 8,
+                        right: 16,
+                        child: Image.asset(
+                          getLogoForCards(mainCard.circuito),
+                          width: 60,
+                          height: 60,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                      Positioned(
+                        top: 150,
+                        left: 15,
+                        child: Text(
+                          mainCard.tipoCarta,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-              
-              Expanded(
-  child: transactions.isEmpty
-      ? Center(child: Text('No transactions available.'))
-      : MainTransactionsListPage(transactions: transactions), 
-),
-
+              const SizedBox(height: 20),
+              //_buildChart(), // Mostra il grafico
+              // Bottone per navigare alla pagina delle transazioni
+              ElevatedButton(
+                onPressed: () {
+                  // Passa le transazioni alla pagina delle transazioni
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MainTransactionsListPage(transactions: transactions),
+                    ),
+                  );
+                },
+                child: Text('View Transactions'),
+              ),
             ],
           ),
         ),
@@ -163,5 +181,78 @@ class _MainAccountPageState extends State<MainAccountPage> {
         ),
       );
     }
+  }
+
+  // Costruzione del grafico
+  Widget _buildChart() {
+    if (chartData.isEmpty) {
+      return Center(child: CircularProgressIndicator());
+    }
+
+    // Dati per le spese (rossa)
+    List<FlSpot> expenseSpots = chartData.asMap().entries.map((entry) {
+      int index = entry.key;
+      Map<String, dynamic> data = entry.value;
+      return FlSpot(index.toDouble(), data['expense']?.toDouble() ?? 0.0);
+    }).toList();
+
+    // Dati per le entrate (verde)
+    List<FlSpot> incomeSpots = chartData.asMap().entries.map((entry) {
+      int index = entry.key;
+      Map<String, dynamic> data = entry.value;
+      return FlSpot(index.toDouble(), data['income'].toDouble());
+    }).toList();
+
+    return SizedBox(
+      height: 300,
+      child: LineChart(
+        LineChartData(
+          lineBarsData: [
+            // Linea per le spese
+            LineChartBarData(
+              spots: expenseSpots,
+              isCurved: true,
+              color: Colors.red,
+              barWidth: 3,
+              isStrokeCapRound: true,
+              belowBarData: BarAreaData(show: false),
+              dotData: FlDotData(show: true),
+            ),
+            // Linea per le entrate
+            LineChartBarData(
+              spots: incomeSpots,
+              isCurved: true,
+              color: Colors.green,
+              barWidth: 3,
+              isStrokeCapRound: true,
+              belowBarData: BarAreaData(show: false),
+              dotData: const FlDotData(show: true),
+            ),
+          ],
+          titlesData: FlTitlesData(
+            leftTitles: const AxisTitles(
+              sideTitles: SideTitles(showTitles: false, interval: 50),
+            ),
+            bottomTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                getTitlesWidget: (value, meta) {
+                  const months = [
+                    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+                  ];
+                  if (value.toInt() < 0 || value.toInt() >= months.length) {
+                    return const SizedBox.shrink();
+                  }
+                  return Text(months[value.toInt()]);
+                },
+              ),
+            ),
+          ),
+          gridData: FlGridData(show: true),
+          borderData: FlBorderData(show: true),
+        ),
+      ),
+    );
   }
 }
