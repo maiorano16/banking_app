@@ -1,0 +1,16 @@
+{
+  "data": [
+    {"month": "January", "expense": 1500, "income": 2000},
+    {"month": "February", "expense": 1350, "income": 1200},
+    {"month": "March", "expense": 1700, "income": 2100},
+    {"month": "April", "expense": 1200, "income": 3000},
+    {"month": "May", "expense": 1900, "income": 2500},
+    {"month": "June", "expense": 1400, "income": 3200},
+    {"month": "July", "expense": 1000, "income": 1500},
+    {"month": "August", "expense": 900, "income": 4500},
+    {"month": "September", "expense": 750, "income": 1900},
+    {"month": "October", "expense": 1000, "income": 3000},
+    {"month": "November", "expense": 1100, "income": 1800},
+    {"month": "December", "expense": 1400, "income": 3000}
+  ]
+}
