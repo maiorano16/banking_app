@@ -1,42 +1,461 @@
 {
-    "year": 2023,
-    "months": [
-        {
-            "month": "January",
-            "annualMainAccountTransaction": [
-                {
-                    "date": "2023-01-05",
-                    "amount": 50.00,
-                    "currency": "EUR",
-                    "category": "Groceries",
-                    "description": "Supermarket shopping",
-                    "payment_method": "Card",
-                    "store": "Coop"
-                },
-                {
-                    "date": "2023-01-10",
-                    "amount": 30.00,
-                    "currency": "EUR",
-                    "category": "Transportation",
-                    "description": "Bus subscription",
-                    "payment_method": "Bank Transfer"
-                },
-                {
-                    "date": "2023-01-15",
-                    "amount": 25.00,
-                    "currency": "USD",
-                    "category": "Travel",
-                    "description": "Flight ticket purchase",
-                    "payment_method": "Card"
-                }
-            ],
-            "total_expense": 1200.50,
-            "average_daily_expense": 38.73,
-            "categories": {
-                "Groceries": 400.00,
-                "Transportation": 300.00,
-                "Entertainment": 250.00
-            }
-        }
+    "transactions": [
+      {
+        "month": "January",
+        "transactions": [
+          {
+            "card_id": "C003",
+            "transaction_number": 1,
+            "transaction_type": "Payment",
+            "service_type": "Groceries",
+            "description": "Grocery shopping at supermarket",
+            "transaction_date": "2024-01-05",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 800
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 2,
+            "transaction_type": "Payment",
+            "service_type": "Rent",
+            "description": "Monthly rent payment",
+            "transaction_date": "2024-01-10",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 700
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 3,
+            "transaction_type": "Deposit",
+            "service_type": "Salary",
+            "description": "Monthly salary deposit",
+            "transaction_date": "2024-01-31",
+            "currency": "USD",
+            "flow": "in",
+            "transaction_cost": 2000
+          }
+        ]
+      },
+      {
+        "month": "February",
+        "transactions": [
+          {
+            "card_id": "C003",
+            "transaction_number": 4,
+            "transaction_type": "Payment",
+            "service_type": "Utilities",
+            "description": "Electricity bill payment",
+            "transaction_date": "2024-02-01",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 350
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 5,
+            "transaction_type": "Payment",
+            "service_type": "Transport",
+            "description": "Monthly public transport pass",
+            "transaction_date": "2024-02-05",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 150
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 6,
+            "transaction_type": "Deposit",
+            "service_type": "Salary",
+            "description": "Monthly salary deposit",
+            "transaction_date": "2024-02-28",
+            "currency": "USD",
+            "flow": "in",
+            "transaction_cost": 1200
+          }
+        ]
+      },
+      {
+        "month": "March",
+        "transactions": [
+          {
+            "card_id": "C003",
+            "transaction_number": 7,
+            "transaction_type": "Payment",
+            "service_type": "Entertainment",
+            "description": "Movie tickets for weekend",
+            "transaction_date": "2024-03-05",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 300
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 8,
+            "transaction_type": "Payment",
+            "service_type": "Shopping",
+            "description": "Shopping spree at mall",
+            "transaction_date": "2024-03-10",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 500
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 9,
+            "transaction_type": "Deposit",
+            "service_type": "Salary",
+            "description": "Monthly salary deposit",
+            "transaction_date": "2024-03-31",
+            "currency": "USD",
+            "flow": "in",
+            "transaction_cost": 2100
+          }
+        ]
+      },
+      {
+        "month": "April",
+        "transactions": [
+          {
+            "card_id": "C003",
+            "transaction_number": 10,
+            "transaction_type": "Payment",
+            "service_type": "Utilities",
+            "description": "Monthly water bill payment",
+            "transaction_date": "2024-04-02",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 400
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 11,
+            "transaction_type": "Payment",
+            "service_type": "Entertainment",
+            "description": "Concert ticket purchase",
+            "transaction_date": "2024-04-15",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 250
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 12,
+            "transaction_type": "Deposit",
+            "service_type": "Salary",
+            "description": "Monthly salary deposit",
+            "transaction_date": "2024-04-30",
+            "currency": "USD",
+            "flow": "in",
+            "transaction_cost": 3000
+          }
+        ]
+      },
+      {
+        "month": "May",
+        "transactions": [
+          {
+            "card_id": "C003",
+            "transaction_number": 13,
+            "transaction_type": "Payment",
+            "service_type": "Groceries",
+            "description": "Grocery shopping at supermarket",
+            "transaction_date": "2024-05-02",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 1200
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 14,
+            "transaction_type": "Payment",
+            "service_type": "Health",
+            "description": "Monthly health insurance payment",
+            "transaction_date": "2024-05-10",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 700
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 15,
+            "transaction_type": "Deposit",
+            "service_type": "Salary",
+            "description": "Monthly salary deposit",
+            "transaction_date": "2024-05-31",
+            "currency": "USD",
+            "flow": "in",
+            "transaction_cost": 2500
+          }
+        ]
+      },
+      {
+        "month": "June",
+        "transactions": [
+          {
+            "card_id": "C003",
+            "transaction_number": 16,
+            "transaction_type": "Payment",
+            "service_type": "Travel",
+            "description": "Flight tickets for vacation",
+            "transaction_date": "2024-06-01",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 1400
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 17,
+            "transaction_type": "Payment",
+            "service_type": "Shopping",
+            "description": "Electronics purchase",
+            "transaction_date": "2024-06-10",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 500
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 18,
+            "transaction_type": "Deposit",
+            "service_type": "Salary",
+            "description": "Monthly salary deposit",
+            "transaction_date": "2024-06-30",
+            "currency": "USD",
+            "flow": "in",
+            "transaction_cost": 3200
+          }
+        ]
+      },
+      {
+        "month": "July",
+        "transactions": [
+          {
+            "card_id": "C003",
+            "transaction_number": 19,
+            "transaction_type": "Payment",
+            "service_type": "Rent",
+            "description": "Monthly rent payment",
+            "transaction_date": "2024-07-01",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 1000
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 20,
+            "transaction_type": "Payment",
+            "service_type": "Groceries",
+            "description": "Weekly grocery shopping",
+            "transaction_date": "2024-07-07",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 300
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 21,
+            "transaction_type": "Deposit",
+            "service_type": "Salary",
+            "description": "Monthly salary deposit",
+            "transaction_date": "2024-07-31",
+            "currency": "USD",
+            "flow": "in",
+            "transaction_cost": 1500
+          }
+        ]
+      },
+      {
+        "month": "August",
+        "transactions": [
+          {
+            "card_id": "C003",
+            "transaction_number": 22,
+            "transaction_type": "Payment",
+            "service_type": "Entertainment",
+            "description": "Concert tickets purchase",
+            "transaction_date": "2024-08-02",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 400
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 23,
+            "transaction_type": "Payment",
+            "service_type": "Shopping",
+            "description": "Clothes shopping",
+            "transaction_date": "2024-08-10",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 500
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 24,
+            "transaction_type": "Deposit",
+            "service_type": "Salary",
+            "description": "Monthly salary deposit",
+            "transaction_date": "2024-08-31",
+            "currency": "USD",
+            "flow": "in",
+            "transaction_cost": 4500
+          }
+        ]
+      },
+      {
+        "month": "September",
+        "transactions": [
+          {
+            "card_id": "C003",
+            "transaction_number": 25,
+            "transaction_type": "Payment",
+            "service_type": "Utilities",
+            "description": "Gas bill payment",
+            "transaction_date": "2024-09-01",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 200
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 26,
+            "transaction_type": "Payment",
+            "service_type": "Groceries",
+            "description": "Monthly grocery shopping",
+            "transaction_date": "2024-09-10",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 300
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 27,
+            "transaction_type": "Deposit",
+            "service_type": "Salary",
+            "description": "Monthly salary deposit",
+            "transaction_date": "2024-09-30",
+            "currency": "USD",
+            "flow": "in",
+            "transaction_cost": 1900
+          }
+        ]
+      },
+      {
+        "month": "October",
+        "transactions": [
+          {
+            "card_id": "C003",
+            "transaction_number": 28,
+            "transaction_type": "Payment",
+            "service_type": "Rent",
+            "description": "Monthly rent payment",
+            "transaction_date": "2024-10-05",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 1000
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 29,
+            "transaction_type": "Payment",
+            "service_type": "Entertainment",
+            "description": "Weekend outing",
+            "transaction_date": "2024-10-10",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 500
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 30,
+            "transaction_type": "Deposit",
+            "service_type": "Salary",
+            "description": "Monthly salary deposit",
+            "transaction_date": "2024-10-31",
+            "currency": "USD",
+            "flow": "in",
+            "transaction_cost": 3000
+          }
+        ]
+      },
+      {
+        "month": "November",
+        "transactions": [
+          {
+            "card_id": "C003",
+            "transaction_number": 31,
+            "transaction_type": "Payment",
+            "service_type": "Utilities",
+            "description": "Monthly water bill payment",
+            "transaction_date": "2024-11-01",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 350
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 32,
+            "transaction_type": "Payment",
+            "service_type": "Groceries",
+            "description": "Weekly grocery shopping",
+            "transaction_date": "2024-11-08",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 750
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 33,
+            "transaction_type": "Deposit",
+            "service_type": "Salary",
+            "description": "Monthly salary deposit",
+            "transaction_date": "2024-11-30",
+            "currency": "USD",
+            "flow": "in",
+            "transaction_cost": 1800
+          }
+        ]
+      },
+      {
+        "month": "December",
+        "transactions": [
+          {
+            "card_id": "C003",
+            "transaction_number": 34,
+            "transaction_type": "Payment",
+            "service_type": "Rent",
+            "description": "Monthly rent payment",
+            "transaction_date": "2024-12-01",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 1000
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 35,
+            "transaction_type": "Payment",
+            "service_type": "Groceries",
+            "description": "Grocery shopping for holiday meals",
+            "transaction_date": "2024-12-10",
+            "currency": "USD",
+            "flow": "out",
+            "transaction_cost": 400
+          },
+          {
+            "card_id": "C003",
+            "transaction_number": 36,
+            "transaction_type": "Deposit",
+            "service_type": "Salary",
+            "description": "Monthly salary deposit",
+            "transaction_date": "2024-12-31",
+            "currency": "USD",
+            "flow": "in",
+            "transaction_cost": 3000
+          }
+        ]
+      }
     ]
-}
+  }
+  
