@@ -11,6 +11,7 @@ class Utenti {
   String professione;
   String sesso;
   String userId;
+  String? fotoProfilo;  // Aggiungi questo campo per la foto del profilo
 
   Utenti({
     required this.nome,
@@ -22,6 +23,7 @@ class Utenti {
     required this.professione,
     required this.sesso,
     required this.userId,
+    this.fotoProfilo, // Aggiungi fotoProfilo al costruttore
   });
 
   factory Utenti.fromJson(Map<String, dynamic> json){
@@ -34,10 +36,11 @@ class Utenti {
       eta: json['age'],
       professione: json['profession'],
       sesso: json['gender'],
-      userId: json['user_id'], 
-
+      userId: json['user_id'],
+      fotoProfilo: json['fotoProfilo'], // Aggiungi questa riga per il campo fotoProfilo
     );
   }
+
   Map<String, dynamic> toJson() {
     return {
       'nome': nome,
@@ -49,15 +52,14 @@ class Utenti {
       'dataNascita': dataNascita,
       'luogoNascita': luogoNascita,
       'userId': userId,
+      'fotoProfilo': fotoProfilo, // Aggiungi questa riga per serializzare fotoProfilo
     };
   }
 }
 
-
-Future<List<Utenti>> loadUtentiFromJson() async{
+Future<List<Utenti>> loadUtentiFromJson() async {
   final String response = await rootBundle.loadString('assets/fileJson/user.json');
   final Map<String, dynamic> data = json.decode(response);
-   final List<dynamic> utentiList = data['users'];
+  final List<dynamic> utentiList = data['users'];
   return utentiList.map((json) => Utenti.fromJson(json)).toList();
-
 }
