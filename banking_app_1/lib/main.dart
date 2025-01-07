@@ -1,10 +1,14 @@
+import 'package:banking_app_1/pages/cardScreen.dart';
 import 'package:banking_app_1/pages/mainAccountScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:banking_app_1/pages/splashScreen.dart';
+import 'package:banking_app_1/pages/userProfileScreen.dart';
 
-void main() {
+void main() async {
 
   runApp(MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   @override
@@ -14,8 +18,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MainAccountPage(),
+      home: SplashScreen(),
+      routes: {
+        '/home': (context) => MainAccountPage(),
+
+      },
       debugShowCheckedModeBanner: false,
     );
   }
 }
+
