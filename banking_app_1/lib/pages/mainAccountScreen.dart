@@ -18,21 +18,23 @@ class _MainAccountPageState extends State<MainAccountPage> {
   List<Carta> carte = [];
   List<MainCardTransaction> transactions = [];
   List<Map<String, dynamic>> chartData = [];
+  PageController _pageController = PageController();
 
   @override
   void initState() {
     super.initState();
     _loadCarteFromJson();
-    _loadTransactionsFromJson();  
+    _loadTransactionsFromJson();
     _loadChartData();
   }
 
   // Caricamento dei dati delle carte
   Future<void> _loadCarteFromJson() async {
-    final String response = await rootBundle.loadString('assets/fileJson/card.json');
+    final String response =
+        await rootBundle.loadString('assets/fileJson/card.json');
     final Map<String, dynamic> data = json.decode(response);
     final List<dynamic> carteList = data['cards'];
-    
+
     setState(() {
       carte = carteList.map((json) => Carta.fromJson(json)).toList();
     });
@@ -40,15 +42,18 @@ class _MainAccountPageState extends State<MainAccountPage> {
 
   // Caricamento delle transazioni annuali
   Future<void> _loadTransactionsFromJson() async {
-    final String response = await rootBundle.loadString('assets/fileJson/mainAccountTransactionAnnual.json');
+    final String response = await rootBundle
+        .loadString('assets/fileJson/mainAccountTransactionAnnual.json');
     final Map<String, dynamic> data = json.decode(response);
-    final transactionsData = TransactionsData.fromJson(data);  // Use TransactionsData instead of AnnualReport
+    final transactionsData = TransactionsData.fromJson(
+        data); // Use TransactionsData instead of AnnualReport
 
     List<MainCardTransaction> allTransactions = [];
-    
+
     // Supponiamo che le transazioni siano separate per mese
     for (var month in transactionsData.transactions) {
-      allTransactions.addAll(month.transactions);  // Aggiungi tutte le transazioni mensili
+      allTransactions
+          .addAll(month.transactions); // Aggiungi tutte le transazioni mensili
     }
 
     setState(() {
@@ -58,7 +63,8 @@ class _MainAccountPageState extends State<MainAccountPage> {
 
   // Caricamento dei dati del grafico
   Future<void> _loadChartData() async {
-    final String response = await rootBundle.loadString('assets/fileJson/annualExpense.json');
+    final String response =
+        await rootBundle.loadString('assets/fileJson/annualExpense.json');
     final Map<String, dynamic> data = json.decode(response);
     final List<dynamic> dataList = data['data'];
 
@@ -67,9 +73,87 @@ class _MainAccountPageState extends State<MainAccountPage> {
     });
   }
 
+  // Costruzione del grafico
+  // Costruzione del grafico
+Widget _buildChart() {
+  if (chartData.isEmpty) {
+    return Center(child: CircularProgressIndicator());
+  }
+
+  // Dati per le spese (rossa)
+  List<FlSpot> expenseSpots = chartData.asMap().entries.map((entry) {
+    int index = entry.key;
+    Map<String, dynamic> data = entry.value;
+    return FlSpot(index.toDouble(), data['expense']?.toDouble() ?? 0.0);
+  }).toList();
+
+  // Dati per le entrate (verde)
+  List<FlSpot> incomeSpots = chartData.asMap().entries.map((entry) {
+    int index = entry.key;
+    Map<String, dynamic> data = entry.value;
+    return FlSpot(index.toDouble(), data['income'].toDouble());
+  }).toList();
+
+  return Padding(
+  padding: const EdgeInsets.only(left: 30, right: 30), // Sposta il grafico a destra e aggiunge spazio a sinistra
+  child: SizedBox(
+    height: 300,
+    child: LineChart(
+      LineChartData(
+        lineBarsData: [
+          // Linea per le spese
+          LineChartBarData(
+            spots: expenseSpots,
+            isCurved: true,
+            color: Colors.red,
+            barWidth: 3,
+            isStrokeCapRound: true,
+            belowBarData: BarAreaData(show: false),
+            dotData: FlDotData(show: true),
+          ),
+          // Linea per le entrate
+          LineChartBarData(
+            spots: incomeSpots,
+            isCurved: true,
+            color: Colors.green,
+            barWidth: 3,
+            isStrokeCapRound: true,
+            belowBarData: BarAreaData(show: false),
+            dotData: FlDotData(show: true),
+          ),
+        ],
+        titlesData: FlTitlesData(
+          leftTitles: AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
+          rightTitles: AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
+          bottomTitles: AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
+        ),
+        gridData: FlGridData(show: true),
+        borderData: FlBorderData(show: true),
+        // Aggiungi spazio extra per mostrare il primo e l'ultimo punto
+        clipData: FlClipData(
+          top: false,
+          bottom: false,
+          left: false,
+          right: false,
+        ),
+      ),
+    ),
+  ),
+);
+
+}
+
+
   @override
   Widget build(BuildContext context) {
-    final mainAccountCards = carte.where((card) => card.tipoAccount == 'Main account').toList();
+    final mainAccountCards =
+        carte.where((card) => card.tipoAccount == 'Main account').toList();
     if (mainAccountCards.isNotEmpty) {
       final mainCard = mainAccountCards.first;
       return Scaffold(
@@ -153,19 +237,55 @@ class _MainAccountPageState extends State<MainAccountPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              //_buildChart(), // Mostra il grafico
-              // Bottone per navigare alla pagina delle transazioni
-              ElevatedButton(
-                onPressed: () {
-                  // Passa le transazioni alla pagina delle transazioni
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MainTransactionsListPage(transactions: transactions),
-                    ),
-                  );
-                },
-                child: Text('View Transactions'),
+
+              // Barra di navigazione tra le sezioni
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text(
+                    'Transactions',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    'Graphics',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+
+              // PageView per gestire lo swipe
+              Expanded(
+                child: PageView(
+                  controller: _pageController,
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    // Sezione Transazioni
+                    transactions.isEmpty
+                        ? const Center(child: CircularProgressIndicator())
+                        : ListView.builder(
+                            itemCount: transactions.length,
+                            itemBuilder: (context, index) {
+                              final transaction = transactions[index];
+                              return Card(
+                                elevation: 2,
+                                margin: const EdgeInsets.symmetric(vertical: 5),
+                                child: ListTile(
+                                  title: Text(transaction.description),
+                                  subtitle: Text(transaction.transactionDate),
+                                  trailing:
+                                      Text('\$${transaction.transactionCost}'),
+                                ),
+                              );
+                            },
+                          ),
+                    // Sezione Grafico
+                    _buildChart(), // Mostra il grafico
+                  ],
+                  onPageChanged: (pageIndex) {
+                    // Puoi gestire eventuali logiche aggiuntive
+                  },
+                ),
               ),
             ],
           ),
@@ -181,78 +301,5 @@ class _MainAccountPageState extends State<MainAccountPage> {
         ),
       );
     }
-  }
-
-  // Costruzione del grafico
-  Widget _buildChart() {
-    if (chartData.isEmpty) {
-      return Center(child: CircularProgressIndicator());
-    }
-
-    // Dati per le spese (rossa)
-    List<FlSpot> expenseSpots = chartData.asMap().entries.map((entry) {
-      int index = entry.key;
-      Map<String, dynamic> data = entry.value;
-      return FlSpot(index.toDouble(), data['expense']?.toDouble() ?? 0.0);
-    }).toList();
-
-    // Dati per le entrate (verde)
-    List<FlSpot> incomeSpots = chartData.asMap().entries.map((entry) {
-      int index = entry.key;
-      Map<String, dynamic> data = entry.value;
-      return FlSpot(index.toDouble(), data['income'].toDouble());
-    }).toList();
-
-    return SizedBox(
-      height: 300,
-      child: LineChart(
-        LineChartData(
-          lineBarsData: [
-            // Linea per le spese
-            LineChartBarData(
-              spots: expenseSpots,
-              isCurved: true,
-              color: Colors.red,
-              barWidth: 3,
-              isStrokeCapRound: true,
-              belowBarData: BarAreaData(show: false),
-              dotData: FlDotData(show: true),
-            ),
-            // Linea per le entrate
-            LineChartBarData(
-              spots: incomeSpots,
-              isCurved: true,
-              color: Colors.green,
-              barWidth: 3,
-              isStrokeCapRound: true,
-              belowBarData: BarAreaData(show: false),
-              dotData: const FlDotData(show: true),
-            ),
-          ],
-          titlesData: FlTitlesData(
-            leftTitles: const AxisTitles(
-              sideTitles: SideTitles(showTitles: false, interval: 50),
-            ),
-            bottomTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                getTitlesWidget: (value, meta) {
-                  const months = [
-                    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-                  ];
-                  if (value.toInt() < 0 || value.toInt() >= months.length) {
-                    return const SizedBox.shrink();
-                  }
-                  return Text(months[value.toInt()]);
-                },
-              ),
-            ),
-          ),
-          gridData: FlGridData(show: true),
-          borderData: FlBorderData(show: true),
-        ),
-      ),
-    );
   }
 }
