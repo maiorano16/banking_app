@@ -9,13 +9,25 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  late Future<List<Utenti>> utentiFuture;
-  bool showMoreInfo = false;
+  late Utenti user; // La variabile `user` deve essere inizializzata
+  bool isLoading = true; // Flag per indicare se i dati sono in fase di caricamento
 
   @override
   void initState() {
     super.initState();
-    utentiFuture = loadUtentiFromJson();
+    // Carica l'utente all'interno di `initState()`
+    loadUtentiFromJson().then((value) {
+      if (value.isNotEmpty) {
+        setState(() {
+          user = value.first; // Inizializza l'utente
+          isLoading = false;  // Imposta `isLoading` a false quando i dati sono caricati
+        });
+      } else {
+        setState(() {
+          isLoading = false;  // Se non ci sono utenti, termina comunque il caricamento
+        });
+      }
+    });
   }
 
   @override
@@ -24,14 +36,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         title: const Text('My Account'),
         actions: [
-          FutureBuilder<List<Utenti>>(
-            future: utentiFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done &&
-                  snapshot.hasData &&
-                  snapshot.data!.isNotEmpty) {
-                final Utenti user = snapshot.data!.first;
-                return IconButton(
+          isLoading
+              ? const SizedBox.shrink()
+              : IconButton(
                   icon: const Icon(Icons.edit),
                   onPressed: () async {
                     final updatedUser = await Navigator.push<Utenti>(
@@ -43,31 +50,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     if (updatedUser != null) {
                       setState(() {
-                        utentiFuture = Future.value([updatedUser]);
+                        user = updatedUser; // Aggiorna l'utente
                       });
                     }
                   },
-                );
-              } else {
-                return const SizedBox.shrink();
-              }
-            },
-          ),
+                ),
         ],
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
-      body: FutureBuilder<List<Utenti>>(
-        future: utentiFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Errore: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('Nessun utente trovato.'));
-          } else {
-            final Utenti user = snapshot.data!.first;
-            return SingleChildScrollView(
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator()) // Mostra un caricamento finché i dati non sono pronti
+          : SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -78,10 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 ),
               ),
-            );
-          }
-        },
-      ),
+            ),
     );
   }
 }

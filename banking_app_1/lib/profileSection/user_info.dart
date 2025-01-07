@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:banking_app_1/models/user_model.dart';
 import 'package:banking_app_1/utility/get_gender_icon.dart';
 import 'package:banking_app_1/widgets/profile_card.dart';
@@ -17,7 +18,11 @@ class UserInfoSection extends StatelessWidget {
         Center(
           child: CircleAvatar(
             radius: 60,
-            backgroundImage: const AssetImage('assets/userProfileImmage/userIcon.png'),
+            backgroundImage: user.fotoProfilo != null
+                ? FileImage(
+                    File(user.fotoProfilo!)) // Usa l'immagine aggiornata
+                : const AssetImage('assets/userProfileImmage/userIcon.png')
+                    as ImageProvider, // Usa l'immagine di default
             backgroundColor: Colors.grey[200],
           ),
         ),
