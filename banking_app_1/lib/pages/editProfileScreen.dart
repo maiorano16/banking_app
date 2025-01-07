@@ -1,13 +1,16 @@
-import 'package:banking_app_1/utility/validations_utils.dart';
-import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:banking_app_1/models/user_model.dart';
+import 'package:banking_app_1/utility/validations_utils.dart';
 import 'package:banking_app_1/widgets/custom_text_field.dart';
 import 'package:banking_app_1/widgets/save_button.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final Utenti user;
 
-  const EditProfileScreen({Key? key, required this.user}) : super(key: key);
+  // Constructor to accept the user data
+  EditProfileScreen({required this.user});
 
   @override
   _EditProfileScreenState createState() => _EditProfileScreenState();
@@ -24,6 +27,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   late String luogoNascita;
   late String gender;
 
+  File? _profileImage;
+
+  final ImagePicker _picker = ImagePicker();
+
   @override
   void initState() {
     super.initState();
@@ -34,6 +41,52 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     dataNascita = widget.user.dataNascita;
     luogoNascita = widget.user.luogoNascita;
     gender = widget.user.sesso;
+    // Se c'è un'immagine di profilo, la carica
+    if (widget.user.fotoProfilo != null) {
+      _profileImage = File(widget.user.fotoProfilo!);
+    }
+  }
+
+  Future<void> _pickImage() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Scegli un\'opzione'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: Text('Scatta una foto'),
+                onTap: () async {
+                  Navigator.pop(context);
+                  final XFile? pickedFile =
+                      await _picker.pickImage(source: ImageSource.camera);
+                  if (pickedFile != null) {
+                    setState(() {
+                      _profileImage = File(pickedFile.path);
+                    });
+                  }
+                },
+              ),
+              ListTile(
+                title: Text('Scegli dalla galleria'),
+                onTap: () async {
+                  Navigator.pop(context);
+                  final XFile? pickedFile =
+                      await _picker.pickImage(source: ImageSource.gallery);
+                  if (pickedFile != null) {
+                    setState(() {
+                      _profileImage = File(pickedFile.path);
+                    });
+                  }
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -50,6 +103,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                GestureDetector(
+                  onTap: _pickImage,
+                  child: CircleAvatar(
+                    radius: 50,
+                    backgroundColor: Colors.grey[300],
+                    backgroundImage: _profileImage != null
+                        ? FileImage(_profileImage!)
+                        : null,
+                    child: _profileImage == null
+                        ? Icon(Icons.camera_alt, size: 50)
+                        : null,
+                  ),
+                ),
+                const SizedBox(height: 16),
                 CustomTextField(
                   label: 'Nome',
                   initialValue: nome,
@@ -153,6 +220,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           dataNascita: dataNascita,
                           luogoNascita: luogoNascita,
                           userId: widget.user.userId,
+                          fotoProfilo: _profileImage != null
+                              ? _profileImage!.path
+                              : widget.user
+                                  .fotoProfilo, // Passa l'immagine aggiornata
                         ),
                       );
                     }
